@@ -1,0 +1,238 @@
+{
+    "label": "GitHub App",
+    "name": "github-app",
+    "apiVersion": "v1",
+    "internal": false,
+    "configurationType": "PER_USER",
+    "deployment": {
+        "profiles":[
+            {
+                "name": "default",
+                "label": "Default",
+                "memory": 256,
+                "description": "Default configuration"
+            }
+        ],
+        "allowMultipleInstances": false
+    },
+    "icon48": "https://storage.googleapis.com/static.slingrs.io/platform/endpoints/github-app.png",
+    "configurationHelpUrl": "/endpoints_github_app.html#configuration",
+    "status": "ACTIVE",
+    "stores": [
+        {"name": "installations"}
+    ],
+    "events": [
+        {
+            "label": "Webhook",
+            "name": "webhook",
+            "description": "Happens when GitHub sends a webhook to the endpoint."
+        }
+    ],
+    "functions": [
+        {
+            "label": "App GET",
+            "name": "_appGet",
+            "functionType": "GLOBAL",
+            "description": "Sends a GET request using app credentials"
+        },
+        {
+            "label": "App POST",
+            "name": "_appPost",
+            "functionType": "GLOBAL",
+            "description": "Sends a POST request using app credentials"
+        },
+        {
+            "label": "App PUT",
+            "name": "_appPut",
+            "functionType": "GLOBAL",
+            "description": "Sends a PUT request using app credentials"
+        },
+        {
+            "label": "App PATCH",
+            "name": "_appPatch",
+            "functionType": "GLOBAL",
+            "description": "Sends a PATCH request using app credentials"
+        },
+        {
+            "label": "App DELETE",
+            "name": "_appDelete",
+            "functionType": "GLOBAL",
+            "description": "Sends a DELETE request using app credentials"
+        },
+        {
+            "label": "User GET",
+            "name": "_userGet",
+            "functionType": "PER_USER",
+            "description": "Sends a GET request using user credentials"
+        },
+        {
+            "label": "User POST",
+            "name": "_userPost",
+            "functionType": "PER_USER",
+            "description": "Sends a POST request using user credentials"
+        },
+        {
+            "label": "User PUT",
+            "name": "_userPut",
+            "functionType": "PER_USER",
+            "description": "Sends a PUT request using user credentials"
+        },
+        {
+            "label": "User PATCH",
+            "name": "_userPatch",
+            "functionType": "PER_USER",
+            "description": "Sends a PATCH request using user credentials"
+        },
+        {
+            "label": "User DELETE",
+            "name": "_userDelete",
+            "functionType": "PER_USER",
+            "description": "Sends a DELETE request using user credentials"
+        },
+        {
+            "label": "Install GET",
+            "name": "_installGet",
+            "functionType": "GLOBAL",
+            "description": "Sends a GET request using installation credentials"
+        },
+        {
+            "label": "Install POST",
+            "name": "_installPost",
+            "functionType": "GLOBAL",
+            "description": "Sends a POST request using installation credentials"
+        },
+        {
+            "label": "Install PUT",
+            "name": "_installPut",
+            "functionType": "GLOBAL",
+            "description": "Sends a PUT request using installation credentials"
+        },
+        {
+            "label": "Install PATCH",
+            "name": "_installPatch",
+            "functionType": "GLOBAL",
+            "description": "Sends a PATCH request using installation credentials"
+        },
+        {
+            "label": "Install DELETE",
+            "name": "_installDelete",
+            "functionType": "GLOBAL",
+            "description": "Sends a DELETE request using installation credentials"
+        },
+        {
+            "label": "Sync installations",
+            "name": "_syncInstallations",
+            "functionType": "GLOBAL",
+            "description": "Syncs existing installations for the app"
+        }
+    ],
+    "scripts":[
+        "helpers.js",
+        "github-shortcuts-apps-get.js",
+        "github-shortcuts-apps-post.js",
+        "github-shortcuts-apps-put.js",
+        "github-shortcuts-apps-patch.js",
+        "github-shortcuts-apps-delete.js",
+        "github-shortcuts-users-get.js",
+        "github-shortcuts-users-post.js",
+        "github-shortcuts-users-put.js",
+        "github-shortcuts-users-patch.js",
+        "github-shortcuts-users-delete.js",
+        "github-shortcuts-installs-get.js",
+        "github-shortcuts-installs-post.js",
+        "github-shortcuts-installs-put.js",
+        "github-shortcuts-installs-patch.js",
+        "github-shortcuts-installs-delete.js"
+    ],
+    "listeners":[],
+    "configuration":[
+        {
+            "name": "config1",
+            "label": "App config",
+            "value": "The following fields are needed to access the API as a GitHub App. You will find it in you app details in GitHub.",
+            "type": "info"
+        },
+        {
+            "name": "appId",
+            "label": "App ID",
+            "description": "ID of the GitHub app",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "privateKey",
+            "label": "Private key",
+            "description": "This is the private key generate for the app",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "webhookSecret",
+            "label": "Webhook secret",
+            "description": "The webhook secret to validate requests",
+            "type": "text"
+        },
+        {
+            "name": "webhooksUrl",
+            "label": "Webhooks URL",
+            "description": "The URL to configure in webhooks of your GitHub App",
+            "type": "label",
+            "value": "@config.WEBHOOK_URL"
+        },
+        {
+            "name": "config2",
+            "label": "OAuth config",
+            "value": "The following fields are needed to access the API as a GitHub User. You will find it in you app details in GitHub.",
+            "type": "info"
+        },
+        {
+            "name": "clientId",
+            "label": "Client ID",
+            "description": "The client ID used for OAuth",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "clientSecret",
+            "label": "Client secret",
+            "description": "The client secret used for OAuth",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "oauthCallback",
+            "label": "OAuth callback",
+            "description": "The OAuth callback to configure in your GitHub App",
+            "type": "label",
+            "value": "config.WEBHOOK_URL+'/authCallback'"
+        }
+    ],
+    "userConfiguration":[
+        {
+            "name": "code",
+            "label": "Token",
+            "type": "text",
+            "visibility": false
+        },
+        {
+            "name": "redirectUri",
+            "label": "Redirect URI",
+            "type": "text",
+            "visibility": false
+        },
+        {
+            "name" : "connectButton",
+            "label" : "Connect to GitHub",
+            "type" : "button",
+            "typeOptions": {
+                "color": "primary",
+                "icon": "zmdi-play",
+                "action": "var redirectUri = config.WEBHOOK_URL + '/authCallback';\nvar url = 'http://github.com/login/oauth/authorize?client_id='+config.ENDPOINT_CONFIG['clientId']+'&redirect_uri='+redirectUri+'&state='+config.APP;\nvar win = window.open(url, 'Authorization page', 'toolbar=no,scrollbars=no,location=no,statusbar=no,menubar=no,resizable=0,width=500,height=600,left='+((screen.width/2)-250)+',top='+((screen.height/2)-250)+',');\n\nvar self = this;\n\nvar intervalFn = function() {\n\ttry {\n\t\tif (!win || !win.document) {\n\t\t\twindow.clearInterval(pollTimer);\n\t\t}else{\n\t\t\tif (win.document.URL.indexOf('/authCallback') != -1) {\n\t\t\t\twin.innerWidth = 100;\n\t\t\t\twin.innerHeight = 100;\n\t\t\t\twin.screenX = screen.width;\n\t\t\t\twin.screenY = screen.height;\n\t\t\t\twindow.clearInterval(pollTimer);\n\t\t\t\turl = win.document.URL;\n\t\t\t\tvar pos = url.indexOf('code=');\n\t\t\t\tif(pos > -1) {\n\t\t\t\t\tvar token = url.substring(pos + 5);\n\t\t\t\t\t\t\t\t\t\tvar limit = token.indexOf(\"&\");\n\t\t\t\t\tif (limit > -1) {\n\t\t\t\t\t\ttoken = token.substring(0, limit);\n\t\t\t\t\t}\nconfig.code = token;\n\t\t\t\t\tconfig.redirectUri = redirectUri;\n\t\t\t\t\tif (utils.connectToService) {\n\t\t\t\t\t\tutils.connectToService();\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\ttry{win.close();}catch(e){}\n\t\t\t}\n\t\t}\n\t} catch(e) {}\n};\n\nvar pollTimer = window.setInterval(function() {intervalFn.apply(self);}, 500);"
+            },
+            "visibility" : "config.ENDPOINT_STATUS == 'DISCONNECTED'"
+        }
+    ],
+    "userConfigurationButtons":{
+        "connect": false
+    }
+}
