@@ -176,7 +176,7 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
         if (token == null || token.getExpiration() == null || token.getExpiration().before(new Date())) {
             // we need to generate a token
             Json request = Json.map()
-                    .set("path", "/installations/" + installationInfo.getInstallationId() + "/access_tokens")
+                    .set("path", "/app/installations/" + installationInfo.getInstallationId() + "/access_tokens")
                     .set("headers", Json.map()
                             .set("Authorization", "Bearer " + getJsonWebToken())
                             .set("Accept", "application/vnd.github.machine-man-preview+json")
