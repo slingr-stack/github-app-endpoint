@@ -1,7 +1,7 @@
 ---
 title: GitHub App endpoint
 keywords: 
-last_updated: September 12, 2017
+last_updated: February 28, 2023
 tags: []
 summary: "Detailed description of the API of the GitHub App endpoint."
 ---
@@ -62,31 +62,31 @@ This is the OAuth callback you need to configure in your GitHub app.
 
 ## Quick start
 
-Once you endpoint is configured, you can read an issue like this:
+Once your endpoint is configured, you can read an issue like this:
 
 ```js
-var issue = app.endpoints.githubApp.app.repos.issues.get('account', 'repo-owner', 'repo-name', 123);
+var issue = app.endpoints.githubApp.repos.issues.get('repo-owner', 'repo-name', 123);
 ```
 
 And can post a comment to the issue with this code:
 
 ```js
-var newComment = app.endpoint.repos.issues.comments.post('account', 'repo-owner', 'repo-name', 123, {body: 'test comment'});
+var newComment = app.endpoints.gitHubApp.repos.issues.comments.post('repo-owner', 'repo-name', 123, {body: 'test comment'});
 ```
 
 ## Javascript API
 
 ### HTTP requests
 
-You can make `GET`, `POST`, `PUT`, and `DELETE` request to the [GitHub REST API](https://developer.github.com/v3/) 
+You can make `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` request to the [GitHub REST API](https://developer.github.com/v3/) 
 like this:
 
 ```js
-var issue = app.endpoints.githubApp.app.get('/repos/ownerName/repoName/issues/123');
-var newComment = app.endpoints.githubApp.app.post('/repos/ownerName/repoName/issues/123/comments', {body: 'test comment'});
+var issue = app.endpoints.githubApp.get('/repos/ownerName/repoName/issues/123');
+var newComment = app.endpoints.githubApp.post('/repos/ownerName/repoName/issues/123/comments', {body: 'test comment'});
 ```
 
-Please take a look at the documentation of the [HTTP endpoint]({{site.baseurl}}/endpoints_http.html#javascript-api)
+Please take a look at the documentation of the [HTTP endpoint]({{site.baseurl}}/endpoints-http.html#javascript-api)
 for more information.
 
 ### Shortcuts
@@ -96,24 +96,15 @@ For example, instead of calling manually the method `GET /repos/:owner/:repo/iss
 shortcut:
 
 ```js
-var issue = app.endpoints.githubApp.app.repos.issues.get('account', 'owner', 'repo', 123);
+var issue = app.endpoints.githubApp.repos.issues.get('owner', 'repo', 123);
 ```
 
 The following rules are used to determine the shortcut signature:
 
-- **App, install and user namespaces**: all methods can be called as the app, one specific installation or as a specific user 
-  (see [App, install and user shortcuts](#apps-install-and-user-shortcuts)) so you always need to add the namespace `app`,
-  `install` or `user` before each shortcut.
-- **Install shortcuts have the account as first parameter**: when you use the `install` namespace, the first parameter is always
-  the name of the account that has to be used to make the request to the API. This is needed because the endpoint can
-  handle many installations so you need to indicate which installation should be used to perform the request. For example
-  the shortcut to post a comment as an app looks like `app.endpoints.githubApp.install.repo.issues.comments(account, owner, repo, issueNumber, commentObject)`
-  while when doing it as a user, the shortcut doesn't have the `account` parameter: `app.endpoints.githubApp.user.repo.issues.comments(owner, repo, issueNumber, commentObject)`.
-  This is because the endpoint knows which credentials to use based on the current user set in the execution context.
-- **Path sections get converted to namespaces**: for example if the method is GET `~/repos/:owner/:repo/issues` 
-  it is converted to `app.endpoints.install.repo.issues.get(account, owner, repo)`. 
+- **Path sections get converted**: for example if the method is GET `~/repos/:owner/:repo/issues` 
+  it is converted to `app.endpoints.gitHubApp.repo.issues.get(account, owner, repo)`. 
 - **HTTP method is appended at the end of the method**: for example if the method is `GET`, you will see a method with 
-  the suffix `.get(...)`. For example `GET ~/repos/:owner/:repo` will become `app.endpoints.githubApp.install.repo.get(owner, repo)`. 
+  the suffix `.get(...)`. For example `GET ~/repos/:owner/:repo` will become `app.endpoints.githubApp.repo.get(owner, repo)`. 
   This is the mapping of names:
   - `GET`: `get`
   - `POST`: `create`
@@ -121,70 +112,10 @@ The following rules are used to determine the shortcut signature:
   - `PATCH`: `update`
   - `DELETE`: `delete`
 - **Path variables become method parameters**: if the method has variables in the path, they will become parameters for 
-  the method. For example `GET ~/repos/:owner/:repo` will become `app.endpoints.githubApp.install.repos.get(account, owner, repo)`.
-- **Additional parameters or body are sent in the last param as JSON**: if the method accepts more parameters or it 
+  the method. For example `GET ~/repos/:owner/:repo` will become `app.endpoints.githubApp.repos.get(account, owner, repo)`.
+- **Additional parameters or body are sent in the last param as JSON**: if the method accepts more parameters, or it 
   allows to send a body, that will be sent in the last parameter. For example the method `POST ~/repos/:owner/:repo/issues` 
   supports many query parameters, so it will become `app.endpoints.githubApp.install.repos.issues.post(account, owner, repo, {...})`.
-  
-For `GET` methods it is possible to iterate. If you pass some additional parameters you will be able to easily
-iterate results:
-
-```js
-app.endpoints.githubApp.install.orgs.issues.get(accout, owner, {
-    per_page: 30,
-    max_results: 500,
-    callback: function(issue) {
-        // do something with issue
-    }
-})
-```
-
-In this case the callback function will receive items one by one, until there are no more results or the
-max number of results has been reached (`max_results` is optional).
-
-### Apps, install and user shortcuts 
-
-There are three big groups of shortcuts:
-
-- For app requests
-- For installation requests
-- For user requests
-
-In the first case the app token is used and all operations will be done in behalf of the app. These
-shortcuts will be under the `app` namespace. For example:
-
-```js
-var res = app.endpoints.githubApp.app.app.installations.get();
-```
-
-These requests are not specific to any installation, but to the app itself. So if you need to fetch all installations
-or find information of your app in the marketplace, you need to use this namesapce.
-
-The second group are requests associated to an installation, for example:
-
-```js
-var res = app.endpoints.githubApp.install.repos.get('account', 'owner', 'repo');
-```
-
-In this case the request will be done using credentials for that specific installation and you will have access
-to all the things the user granted while installing the app.
-
-Keep in mind that for installation request you should always include the account name as the first parameter. It is very
-likely that the account name is the same as the owner, but you still need to send both as it could be different.
-
-Finally you can use the user token. In this case the user should have authorize the endpoint first and request will be 
-made on user's behalf. For example if a comment is posted, the user will be the author of the comment. These shortcuts 
-are under the `user` namespace, for example:
-
-```js
-var res = app.endpoints.githubApp.user.repos.issues.comments.post('owner', 'repo', 123, {body: 'test comment'});
-```
-
-Keep in mind that only a few operations are allowed for users:
-
-[User-to-server requests](https://developer.github.com/apps/building-integrations/setting-up-and-registering-github-apps/identifying-users-for-github-apps/#user-to-server-requests)
-
-If you try to make calls to other URL you will get an error.
 
 ### Utils
 
@@ -225,7 +156,6 @@ sys.logs.info('Event name: '+body.event_name);
 ```
 
 {% include links.html %}
-
 
 ## About SLINGR
 

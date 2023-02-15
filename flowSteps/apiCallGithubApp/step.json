@@ -1,0 +1,1143 @@
+{
+  "label": "API call to githubApp",
+  "name": "apiCallGithubApp",
+  "category": "integrations",
+  "description": "This flow step will send generic request to githubApp",
+  "inputs": [
+    {
+      "label": "Url",
+      "name": "url",
+      "description": "The method and path to which this endpoint is to send requests in a generic way.",
+      "type": "urlParams",
+      "required": "false",
+      "defaultValue": "GET",
+      "options": {
+        "type": "dropDown",
+        "possibleValues": {
+          "GET": [
+            {
+              "label": "/events"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/events"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/events"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{issue_number}/events"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/events"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/events/{id}"
+            },
+            {
+              "label": "/networks/{owner}/{repo}/events"
+            },
+            {
+              "label": "/orgs/{org}/events"
+            },
+            {
+              "label": "/users/{username}/received_events"
+            },
+            {
+              "label": "/users/{username}/received_events"
+            },
+            {
+              "label": "/users/{username}/events"
+            },
+            {
+              "label": "/users/{username}/events/public"
+            },
+            {
+              "label": "/users/{username}/events/orgs/{org}"
+            },
+            {
+              "label": "/feeds"
+            },
+            {
+              "label": "/notifications"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/notifications"
+            },
+            {
+              "label": "/notifications/threads/{id}"
+            },
+            {
+              "label": "/notifications/threads/{id}/subscription"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/stargazers"
+            },
+            {
+              "label": "/users/{username}/starred"
+            },
+            {
+              "label": "/user/starred"
+            },
+            {
+              "label": "/user/starred/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/subscribers"
+            },
+            {
+              "label": "/users/{username}/subscriptions"
+            },
+            {
+              "label": "/user/subscriptions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/subscription"
+            },
+            {
+              "label": "/users/{username}/gists"
+            },
+            {
+              "label": "/gists"
+            },
+            {
+              "label": "/gists/{id}"
+            },
+            {
+              "label": "/gists/{id}/{sha}"
+            },
+            {
+              "label": "/gists/public"
+            },
+            {
+              "label": "/gists/starred"
+            },
+            {
+              "label": "/gists/{id}/commits"
+            },
+            {
+              "label": "/gists/{id}/star"
+            },
+            {
+              "label": "/gists/{id}/forks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/blobs/{sha}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/commits/{sha}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/refs/{ref}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/refs"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/tags/{sha}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/trees/{sha}"
+            },
+            {
+              "label": "/apps/{app_slug}"
+            },
+            {
+              "label": "/app"
+            },
+            {
+              "label": "/app/installations"
+            },
+            {
+              "label": "/app/installations/{installation_id}"
+            },
+            {
+              "label": "/user/installations"
+            },
+            {
+              "label": "/installation/repositories"
+            },
+            {
+              "label": "/user/installations/{installation_id}/repositories"
+            },
+            {
+              "label": "/marketplace_listing/plans"
+            },
+            {
+              "label": "/marketplace_listing/plans/{id}/accounts"
+            },
+            {
+              "label": "/marketplace_listing/accounts/{id}"
+            },
+            {
+              "label": "/user/marketplace_purchases"
+            },
+            {
+              "label": "/issues"
+            },
+            {
+              "label": "/user/issues"
+            },
+            {
+              "label": "/orgs/{org}/issues"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/assignees"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/assignees/{assignee}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/labels"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/labels/{name}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/labels"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/milestones/{number}/labels"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/milestones"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/milestones/{number}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{issue_number}/timeline"
+            },
+            {
+              "label": "/codes_of_conduct"
+            },
+            {
+              "label": "/codes_of_conduct/{key}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/{archive_format}/{ref}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/community/code_of_conduct"
+            },
+            {
+              "label": "/emojis"
+            },
+            {
+              "label": "/gitignore/templates"
+            },
+            {
+              "label": "/gitignore/templates/{name}"
+            },
+            {
+              "label": "/licenses"
+            },
+            {
+              "label": "/licenses/{license}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/license"
+            },
+            {
+              "label": "/meta"
+            },
+            {
+              "label": "/rate_limit"
+            },
+            {
+              "label": "/user/orgs"
+            },
+            {
+              "label": "/organizations"
+            },
+            {
+              "label": "/users/{username}/orgs"
+            },
+            {
+              "label": "/orgs/{org}"
+            },
+            {
+              "label": "/orgs/{org}/members"
+            },
+            {
+              "label": "/orgs/{org}/members/{username}"
+            },
+            {
+              "label": "/orgs/{org}/members"
+            },
+            {
+              "label": "/orgs/{org}/members/{username}"
+            },
+            {
+              "label": "/orgs/{org}/public_members"
+            },
+            {
+              "label": "/orgs/{org}/public_members/{username}"
+            },
+            {
+              "label": "/orgs/{org}/public_members"
+            },
+            {
+              "label": "/orgs/{org}/public_members/{username}"
+            },
+            {
+              "label": "/orgs/{org}/memberships/{username}"
+            },
+            {
+              "label": "/orgs/{org}/memberships/{username}"
+            },
+            {
+              "label": "/orgs/{org}/invitations"
+            },
+            {
+              "label": "/orgs/{org}/invitations"
+            },
+            {
+              "label": "/user/memberships/orgs"
+            },
+            {
+              "label": "/user/memberships/orgs/{org}"
+            },
+            {
+              "label": "/orgs/{org}/outside_collaborators"
+            },
+            {
+              "label": "/orgs/{org}/teams"
+            },
+            {
+              "label": "/teams/{id}"
+            },
+            {
+              "label": "/teams/{id}/teams"
+            },
+            {
+              "label": "/teams/{id}/members"
+            },
+            {
+              "label": "/teams/{id}/members/{username}"
+            },
+            {
+              "label": "/teams/{id}/memberships/{username}"
+            },
+            {
+              "label": "/teams/{id}/invitations"
+            },
+            {
+              "label": "/teams/{id}/repos"
+            },
+            {
+              "label": "/teams/{id}/repos/{owner}/{repo}"
+            },
+            {
+              "label": "/user/teams"
+            },
+            {
+              "label": "/orgs/{org}/hooks"
+            },
+            {
+              "label": "/orgs/{org}/hooks/{id}"
+            },
+            {
+              "label": "/orgs/{org}/blocks"
+            },
+            {
+              "label": "/orgs/{org}/blocks/{username}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/projects"
+            },
+            {
+              "label": "/orgs/{org}/projects"
+            },
+            {
+              "label": "/projects/{id}"
+            },
+            {
+              "label": "/projects/columns/{column_id}/cards"
+            },
+            {
+              "label": "/projects/columns/cards/{id}"
+            },
+            {
+              "label": "/projects/{project_id}/columns"
+            },
+            {
+              "label": "/projects/columns/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/commits"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/files"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/merge"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/reviews"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/reviews/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/requested_reviewers"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/comments/{id}/reactions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/reactions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/comments/{id}/reactions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/comments/{id}/reactions"
+            },
+            {
+              "label": "/user/repos"
+            },
+            {
+              "label": "/users/{username}/repos"
+            },
+            {
+              "label": "/orgs/{org}/repos"
+            },
+            {
+              "label": "/repositories"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/topics"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/contributors"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/languages"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/teams"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/tags"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/collaborators"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/collaborators/{username}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/collaborators/{username}/permission"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits/{ref}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{name}/community/profile"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits/{sha}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits/{ref}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits/{sha}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/compare/{baseCommitSuspensivePointsHeadCommit}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/readme"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/contents/{path}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/keys"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/keys/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/deployments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/deployments/{deployment_id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/deployments/{id}/statuses"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/deployments/{id}/statuses/{status_id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/downloads"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/downloads/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/forks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/invitations"
+            },
+            {
+              "label": "/user/repository_invitations"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pages"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pages/builds"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pages/builds/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pages/builds/latest"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/latest"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/tags/{tag}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/{id}/assets"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/assets/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/stats/contributors"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/stats/commit_activity"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/stats/code_frequency"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/stats/participation"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/stats/punch_card"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits/{ref}/statuses"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits/{ref}/status"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/traffic/popular/referrers"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/traffic/popular/paths"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/traffic/views"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/traffic/clones"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/hooks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/hooks/{id}"
+            },
+            {
+              "label": "/search/repositories"
+            },
+            {
+              "label": "/search/commits"
+            },
+            {
+              "label": "/search/code"
+            },
+            {
+              "label": "/search/issues"
+            },
+            {
+              "label": "/search/users"
+            }
+          ],
+          "POST": [
+            {
+              "label": "/gists"
+            },
+            {
+              "label": "/gists/{id}/forks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/blobs"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/commits"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/refs"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/tags"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/trees"
+            },
+            {
+              "label": "/installations/{installation_id}/access_tokens"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/assignees"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/labels"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/labels"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/milestones"
+            },
+            {
+              "label": "/markdown"
+            },
+            {
+              "label": "/markdown/raw"
+            },
+            {
+              "label": "/orgs/{org}/teams"
+            },
+            {
+              "label": "/orgs/{org}/hooks"
+            },
+            {
+              "label": "/orgs/{org}/hooks/{id}/pings"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/projects"
+            },
+            {
+              "label": "/orgs/{org}/projects"
+            },
+            {
+              "label": "/projects/columns/{column_id}/cards"
+            },
+            {
+              "label": "/projects/columns/cards/{id}/moves"
+            },
+            {
+              "label": "/projects/{project_id}/columns"
+            },
+            {
+              "label": "/projects/columns/{id}/moves"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/reviews"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/events"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/requested_reviewers"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/comments/{id}/reactions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/reactions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/comments/{id}/reactions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/comments/{id}/reactions"
+            },
+            {
+              "label": "/user/repos"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/commits/{sha}/comments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/keys"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/merges"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pages/builds"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/statuses/{sha}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/hooks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/hooks/{id}/tests"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/hooks/{id}/pings"
+            }
+          ],
+          "DELETE": [
+            {
+              "label": "/notifications/threads/{id}/subscription"
+            },
+            {
+              "label": "/user/starred/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/subscription"
+            },
+            {
+              "label": "/gists/{id}/star"
+            },
+            {
+              "label": "/gists/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/refs/{ref}"
+            },
+            {
+              "label": "/user/installations/{installation_id}/repositories/{repository_id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/lock"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/assignees"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/labels/{name}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/labels/{name}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/labels"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/milestones/{number}"
+            },
+            {
+              "label": "/orgs/{org}/members/{username}"
+            },
+            {
+              "label": "/orgs/{org}/public_members/{username}"
+            },
+            {
+              "label": "/orgs/{org}/memberships/{username}"
+            },
+            {
+              "label": "/orgs/{org}/outside_collaborators/{username}"
+            },
+            {
+              "label": "/teams/{id}"
+            },
+            {
+              "label": "/teams/{id}/memberships/{username}"
+            },
+            {
+              "label": "/teams/{id}/repos/{owner}/{repo}"
+            },
+            {
+              "label": "/orgs/{org}/hooks/{id}"
+            },
+            {
+              "label": "/orgs/{org}/blocks/{username}"
+            },
+            {
+              "label": "/projects/{id}"
+            },
+            {
+              "label": "/projects/columns/cards/{id}"
+            },
+            {
+              "label": "/projects/columns/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/reviews/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/requested_reviewers"
+            },
+            {
+              "label": "/reactions/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/collaborators/{username}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/contents/{path}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/keys/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/deployments"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/deployments/{id}/statuses"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/downloads/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/forks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/invitations/{invitation_id}"
+            },
+            {
+              "label": "/user/repository_invitations/{invitation_id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/assets/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/hooks/{id}"
+            }
+          ],
+          "PATCH": [
+            {
+              "label": "/notifications/threads/{id}"
+            },
+            {
+              "label": "/gists/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/git/refs/{ref}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/labels/{name}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/milestones/{number}"
+            },
+            {
+              "label": "/orgs/{org}"
+            },
+            {
+              "label": "/user/memberships/orgs/{org}"
+            },
+            {
+              "label": "/teams/{id}"
+            },
+            {
+              "label": "/orgs/{org}/hooks/{id}"
+            },
+            {
+              "label": "/projects/{id}"
+            },
+            {
+              "label": "/projects/columns/cards/{id}"
+            },
+            {
+              "label": "/projects/columns/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/comments/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/invitations/{invitation_id}"
+            },
+            {
+              "label": "/user/repository_invitations/{invitation_id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/releases/assets/{id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/hooks/{id}"
+            }
+          ],
+          "PUT": [
+            {
+              "label": "/notifications"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/notifications"
+            },
+            {
+              "label": "/notifications/threads/{id}/subscription"
+            },
+            {
+              "label": "/user/starred/{owner}/{repo}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/subscription"
+            },
+            {
+              "label": "/gists/{id}/star"
+            },
+            {
+              "label": "/user/installations/{installation_id}/repositories/{repository_id}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/lock"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/issues/{number}/labels"
+            },
+            {
+              "label": "/orgs/{org}/public_members/{username}"
+            },
+            {
+              "label": "/orgs/{org}/memberships/{username}"
+            },
+            {
+              "label": "/orgs/{org}/outside_collaborators/{username}"
+            },
+            {
+              "label": "/teams/{id}/members/{username}"
+            },
+            {
+              "label": "/teams/{id}/memberships/{username}"
+            },
+            {
+              "label": "/teams/{id}/repos/{org}/{repo}"
+            },
+            {
+              "label": "/orgs/{org}/blocks/{username}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/merge"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/dismissals"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/topics"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/collaborators/{username}"
+            },
+            {
+              "label": "/repos/{owner}/{repo}/contents/{path}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "Headers",
+      "name": "headers",
+      "description": "Let the client and the server pass additional information with the HTTP request in a key value format. (e.g. key=ABC123)",
+      "type": "keyValue"
+    },
+    {
+      "label": "Query Params",
+      "name": "params",
+      "description": "Parameters attached to the end of a url in a key value format. (e.g. key=ABC123)",
+      "type": "keyValue"
+    },
+    {
+      "label": "Body",
+      "name": "body",
+      "type": "json",
+      "description": "Content to be sent to the server.",
+      "options": {
+        "allowContextSelector": "false"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "label": "Response",
+      "name": "response",
+      "type": "object",
+      "description": "The response to external URL"
+    }
+  ]
+}

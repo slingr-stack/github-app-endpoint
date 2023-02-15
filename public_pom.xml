@@ -4,7 +4,7 @@
 
     <groupId>io.slingr.endpoints</groupId>
     <artifactId>github-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>SLINGR - GitHub App Endpoint</name>
     <packaging>jar</packaging>
