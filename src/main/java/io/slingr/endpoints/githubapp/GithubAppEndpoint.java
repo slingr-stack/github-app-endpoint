@@ -229,6 +229,33 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
         return res;
     }
 
+    @EndpointFunction(name = "_syncInstallations")
+    public Json syncInstallations(FunctionRequest request) {
+        appLogger.info("Syncing installations");
+        Json params = Json.map()
+                .set("path", "/app/installations")
+                .set("headers", Json.map()
+                        .set("Authorization", "Bearer " + getJsonWebToken())
+                        .set("Accept", "application/vnd.github.machine-man-preview+json")
+                );
+        Json res = httpService().defaultGetRequest(params);
+        int updatedInstallations = 0;
+        int createdInstallations = 0;
+        appLogger.info(String.format("[%s] installations were found", res.size()));
+        for (Json installation : res.jsons()) {
+            boolean updated = saveInstallationInfo(installation);
+            if (updated) {
+                updatedInstallations++;
+            } else {
+                createdInstallations++;
+            }
+        }
+        appLogger.info("Done syncing installations");
+        return Json.map()
+                .set("updatedInstallations", updatedInstallations)
+                .set("createdInstallations", createdInstallations);
+    }
+
     private void setRequestHeaders(FunctionRequest request) {
         Json body = request.getJsonParams();
         Json headers = body.json("headers");
@@ -291,7 +318,6 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
         events().send("webhook", body, null);
         return Json.map().set("status", "ok");
     }
-
 
     private boolean saveInstallationInfo(Json installation) {
         String account = installation.json("account").string("login");

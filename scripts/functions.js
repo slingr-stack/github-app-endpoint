@@ -382,6 +382,8 @@ endpoint.reactions = {};
 
 endpoint.repos.pulls.reviews.dismissals = {};
 
+endpoint.syncInstallations = {};
+
 endpoint.events.get = function(httpOptions) {
     var url = parse('/events');
     sys.logs.debug('[githubApp] GET from: ' + url);
@@ -4253,6 +4255,10 @@ endpoint.repos.contents.put = function(owner, repo, path, httpOptions) {
     sys.logs.debug('[githubApp] PUT from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._put(options);
+};
+
+endpoint.syncInstallations = function() {
+    return endpoint._syncInstallations({});
 };
 
 ////////////////////////////////////
