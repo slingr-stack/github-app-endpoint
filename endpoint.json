@@ -58,6 +58,12 @@
             "name": "_delete",
             "functionType": "GLOBAL",
             "description": "Sends a DELETE request using stored credentials"
+        },
+        {
+            "label": "Sync installations",
+            "name": "_syncInstallations",
+            "functionType": "GLOBAL",
+            "description": "Syncs installations from GitHub"
         }
     ],
     "scripts":[
