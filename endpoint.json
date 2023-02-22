@@ -5,6 +5,7 @@
     "internal": false,
     "configurationType": "PER_USER",
     "deployment": {
+        "type": "java11",
         "profiles":[
             {
                 "name": "default",
