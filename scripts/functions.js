@@ -384,6 +384,8 @@ endpoint.repos.pulls.reviews.dismissals = {};
 
 endpoint.syncInstallations = {};
 
+endpoint.utils = {};
+
 endpoint.utils.formatTimestamp = {};
 
 endpoint.utils.parseTimestamp = {};
