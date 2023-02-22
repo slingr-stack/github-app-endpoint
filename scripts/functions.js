@@ -384,6 +384,10 @@ endpoint.repos.pulls.reviews.dismissals = {};
 
 endpoint.syncInstallations = {};
 
+endpoint.utils.formatTimestamp = {};
+
+endpoint.utils.parseTimestamp = {};
+
 endpoint.events.get = function(httpOptions) {
     var url = parse('/events');
     sys.logs.debug('[githubApp] GET from: ' + url);

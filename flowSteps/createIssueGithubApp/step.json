@@ -1,5 +1,5 @@
 {
-  "label": "API call to githubApp",
+  "label": "Create a new Issue call to githubApp",
   "name": "createIssueGithubApp",
   "category": "integrations",
   "description": "This flow step will send a request to githubApp to create a issue in the repo selected.",
