@@ -54,9 +54,6 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
     @EndpointProperty
     private String clientSecret;
 
-    @EndpointProperty
-    private String scopes;
-
     private Token jsonWebToken = null;
 
     @EndpointDataStore

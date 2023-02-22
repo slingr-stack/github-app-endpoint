@@ -132,13 +132,6 @@
             "required": true
         },
         {
-            "name": "scopes",
-            "label": "Scopes",
-            "description": "Scopes for OAuth Apps. Separate multiple scopes with a comma. For example: repo, user, gist",
-            "type": "text",
-            "required": true
-        },
-        {
             "name": "oauthCallback",
             "label": "OAuth callback",
             "description": "The OAuth callback to configure in your GitHub App",
