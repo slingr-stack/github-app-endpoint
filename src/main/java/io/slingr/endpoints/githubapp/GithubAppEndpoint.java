@@ -266,12 +266,8 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
             token = userConfig.string("access_token");
             headers.set("Authorization", "token " + token);
         }
-        else users().sendUserDisconnectedEvent(request.getUserId());
-        if (!StringUtils.isBlank(account)) {
-            token = getAccessTokenForAccount(account);
-            headers.set("Authorization", "token " + token);
-        }
         else {
+            users().sendUserDisconnectedEvent(request.getUserId());
             headers.set("Authorization", "Bearer " + getJsonWebToken());
         }
 
