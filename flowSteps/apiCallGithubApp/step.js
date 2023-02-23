@@ -22,33 +22,22 @@ step.apiCallGithubApp = function (inputs) {
 		headers: inputs.headers || [],
 		params: inputs.params || [],
 		body: inputs.body || {},
-		callbackData: inputs.callbackData || "",
-		callbacks: inputs.callbacks || "",
-		followRedirects: inputs.followRedirects || false,
 		download: inputs.download || false,
 		fileName: inputs.fileName || "",
 		fullResponse: inputs.fullResponse || false,
 		connectionTimeout: inputs.connectionTimeout || 5000,
 		readTimeout: inputs.readTimeout || 60000,
-		events: inputs.events || "",
-		url: inputs.url || {
-			urlValue: "",
-			paramsValue: [],
-			method: ""
+		url: {
+			urlValue: inputs.url.urlValue ? inputs.url.urlValue.split(" ")[1] : "",
+			paramsValue: inputs.url.paramsValue || []
 		},
-		action: inputs.action || ""
+		method: inputs.url.urlValue ? inputs.url.urlValue.split(" ")[0] : ""
 	};
 
 	inputsLogic.headers = isObject(inputsLogic.headers) ? inputsLogic.headers : stringToObject(inputsLogic.headers);
 	inputsLogic.params = isObject(inputsLogic.params) ? inputsLogic.params : stringToObject(inputsLogic.params);
 	inputsLogic.body = isObject(inputsLogic.body) ? inputsLogic.body : JSON.parse(inputsLogic.body);
 
-	var strCallback= `inputsLogic.callbacks = { ${inputsLogic.events}  : function(event, callbackData) { ${inputsLogic.callbacks} }}`;
-	inputsLogic.callbacks = inputsLogic.callbacks ?
-		eval(strCallback) :
-		inputsLogic.callbacks;
-
-	inputsLogic.callbackData = inputsLogic.callbackData ? {record: inputsLogic.callbackData} : inputsLogic.callbackData;
 
 	var options = {
 		path: parse(inputsLogic.url.urlValue, inputsLogic.url.paramsValue),
@@ -56,34 +45,33 @@ step.apiCallGithubApp = function (inputs) {
 		headers: inputsLogic.headers,
 		body: inputsLogic.body,
 		followRedirects : inputsLogic.followRedirects,
-		forceDownload : inputsLogic.events === "fileDownloaded" ? true : inputsLogic.download,
-		downloadSync : inputsLogic.events === "fileDownloaded" ? false : inputsLogic.download,
+		forceDownload :inputsLogic.download,
+		downloadSync : false,
 		fileName: inputsLogic.fileName,
 		fullResponse : inputsLogic.fullResponse,
 		connectionTimeout: inputsLogic.connectionTimeout,
-		readTimeout: inputsLogic.readTimeout,
-		defaultCallback: !!inputsLogic.events
-	};
+		readTimeout: inputsLogic.readTimeout
+	}
 
-	switch (inputsLogic.url.method.toUpperCase()) {
-		case 'GET':
-			return endpoint._get(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'POST':
-			return endpoint._post(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'DELETE':
-			return endpoint._delete(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'PUT':
-			return endpoint._put(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'CONNECT':
-			return endpoint._connect(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'HEAD':
-			return endpoint._head(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'OPTIONS':
-			return endpoint._options(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'PATCH':
-			return endpoint._patch(options, inputsLogic.callbackData, inputsLogic.callbacks);
-		case 'TRACE':
-			return endpoint._trace(options, inputsLogic.callbackData, inputsLogic.callbacks);
+	switch (inputs.method.toLowerCase()) {
+		case 'get':
+			return endpoint._get(options);
+		case 'post':
+			return endpoint._post(options);
+		case 'delete':
+			return endpoint._delete(options);
+		case 'put':
+			return endpoint._put(options);
+		case 'connect':
+			return endpoint._connect(options);
+		case 'head':
+			return endpoint._head(options);
+		case 'options':
+			return endpoint._options(options);
+		case 'patch':
+			return endpoint._patch(options);
+		case 'trace':
+			return endpoint._trace(options);
 	}
 
 
