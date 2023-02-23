@@ -2228,7 +2228,7 @@ Generic flow step for full use of the entire endpoint and its services.
     </thead>
     <tbody>
     <tr>
-        <td>URL</td>
+        <td>URL (Method)</td>
         <td>choice</td>
         <td>yes</td>
         <td> - </td>
@@ -2240,7 +2240,7 @@ Generic flow step for full use of the entire endpoint and its services.
         </td>
     </tr>
     <tr>
-        <td>Path</td>
+        <td>URL (Path)</td>
         <td>choice</td>
         <td>yes</td>
         <td> - </td>
