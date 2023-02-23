@@ -73,8 +73,7 @@
     "flowSteps": [
         "apiCallGithubApp",
         "listIssuesGithubApp",
-        "listReposForUserGithubApp",
-        "createIssueGithubApp"
+        "listReposForUserGithubApp"
     ],
     "listeners":[],
     "configuration":[
