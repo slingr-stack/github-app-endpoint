@@ -256,7 +256,6 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
     private void setRequestHeaders(FunctionRequest request) {
         Json body = request.getJsonParams();
         Json headers = body.json("headers");
-        String account = body.string("account");
         if (headers == null) {
             headers = Json.map();
         }
@@ -265,10 +264,12 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
         if (userConfig != null && !userConfig.isEmpty("access_token")) {
             token = userConfig.string("access_token");
             headers.set("Authorization", "token " + token);
+            logger.info("Request using user token");
         }
         else {
             users().sendUserDisconnectedEvent(request.getUserId());
             headers.set("Authorization", "Bearer " + getJsonWebToken());
+            logger.info("Request using app token (JWT)");
         }
 
         headers.set("Content-Type", "application/json");
