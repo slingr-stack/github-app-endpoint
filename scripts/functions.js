@@ -417,7 +417,7 @@ endpoint.repos.issues.events.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-4){
         case 0:
             url = parse('/repos/:owner/:repo/issues/events', [owner, repo]);
             break;
@@ -470,7 +470,7 @@ endpoint.users.receivedEvents.get = function(username, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/users/:username/received_events', [username]);
             break;
@@ -597,7 +597,7 @@ endpoint.user.starred.get = function(owner, repo, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/user/starred');
             break;
@@ -673,7 +673,7 @@ endpoint.gists.get = function(id, sha, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-3){
         case 0:
             url = parse('/gists');
             break;
@@ -770,7 +770,7 @@ endpoint.repos.git.refs.get = function(owner, repo, ref, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/git/refs/:ref', [owner, repo, ref]);
             break;
@@ -835,7 +835,7 @@ endpoint.app.installations.get = function(installationId, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/app/installations');
             break;
@@ -946,7 +946,7 @@ endpoint.repos.issues.get = function(owner, repo, number, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/issues', [owner, repo]);
             break;
@@ -971,7 +971,7 @@ endpoint.repos.assignees.get = function(owner, repo, assignee, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/assignees', [owner, repo]);
             break;
@@ -996,7 +996,7 @@ endpoint.repos.issues.comments.get = function(owner, repo, number, httpOptions) 
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/issues/:number/comments', [owner, repo, number]);
             break;
@@ -1021,7 +1021,7 @@ endpoint.repos.labels.get = function(owner, repo, name, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/labels', [owner, repo]);
             break;
@@ -1068,7 +1068,7 @@ endpoint.repos.milestones.get = function(owner, repo, number, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/milestones', [owner, repo]);
             break;
@@ -1104,7 +1104,7 @@ endpoint.codesOfConduct.get = function(key, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/codes_of_conduct');
             break;
@@ -1129,7 +1129,7 @@ endpoint.repos.get = function(owner, repo, archiveFormat, ref, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-4){
         case 0:
             url = parse('/repos/:owner/:repo', [owner, repo]);
             break;
@@ -1178,7 +1178,7 @@ endpoint.gitignore.templates.get = function(name, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/gitignore/templates');
             break;
@@ -1203,7 +1203,7 @@ endpoint.licenses.get = function(license, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/licenses');
             break;
@@ -1289,7 +1289,7 @@ endpoint.orgs.members.get = function(org, username, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-4){
         case 0:
             url = parse('/orgs/:org/members', [org]);
             break;
@@ -1320,7 +1320,7 @@ endpoint.orgs.publicMembers.get = function(org, username, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-4){
         case 0:
             url = parse('/orgs/:org/public_members', [org]);
             break;
@@ -1351,7 +1351,7 @@ endpoint.orgs.memberships.get = function(org, username, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/orgs/:org/memberships/:username', [org, username]);
             break;
@@ -1376,7 +1376,7 @@ endpoint.orgs.invitations.get = function(org, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/orgs/:org/invitations', [org]);
             break;
@@ -1401,7 +1401,7 @@ endpoint.user.memberships.orgs.get = function(org, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/user/memberships/orgs');
             break;
@@ -1470,7 +1470,7 @@ endpoint.teams.members.get = function(id, username, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/teams/:id/members', [id]);
             break;
@@ -1517,7 +1517,7 @@ endpoint.teams.repos.get = function(id, owner, repo, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/teams/:id/repos', [id]);
             break;
@@ -1549,7 +1549,7 @@ endpoint.orgs.hooks.get = function(org, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/orgs/:org/hooks', [org]);
             break;
@@ -1574,7 +1574,7 @@ endpoint.orgs.blocks.get = function(org, username, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/orgs/:org/blocks', [org]);
             break;
@@ -1632,7 +1632,7 @@ endpoint.projects.columns.cards.get = function(id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/projects/columns/:column_id/cards', [columnId]);
             break;
@@ -1657,7 +1657,7 @@ endpoint.projects.columns.get = function(id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/projects/:project_id/columns', [projectId]);
             break;
@@ -1682,7 +1682,7 @@ endpoint.repos.pulls.get = function(owner, repo, number, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/pulls', [owner, repo]);
             break;
@@ -1740,7 +1740,7 @@ endpoint.repos.pulls.reviews.get = function(owner, repo, number, id, httpOptions
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/pulls/:number/reviews', [owner, repo, number]);
             break;
@@ -1776,7 +1776,7 @@ endpoint.repos.pulls.comments.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-3){
         case 0:
             url = parse('/repos/:owner/:repo/pulls/:number/comments', [owner, repo, number]);
             break;
@@ -1950,7 +1950,7 @@ endpoint.repos.branches.get = function(owner, repo, branch, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/branches', [owner, repo]);
             break;
@@ -2063,7 +2063,7 @@ endpoint.repos.collaborators.get = function(owner, repo, username, httpOptions) 
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/collaborators', [owner, repo]);
             break;
@@ -2099,7 +2099,7 @@ endpoint.repos.comments.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/comments', [owner, repo]);
             break;
@@ -2146,7 +2146,7 @@ endpoint.repos.commits.get = function(owner, repo, sha, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-4){
         case 0:
             url = parse('/repos/:owner/:repo/commits', [owner, repo]);
             break;
@@ -2210,7 +2210,7 @@ endpoint.repos.keys.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/keys', [owner, repo]);
             break;
@@ -2235,7 +2235,7 @@ endpoint.repos.deployments.get = function(owner, repo, deploymentId, httpOptions
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/deployments', [owner, repo]);
             break;
@@ -2260,7 +2260,7 @@ endpoint.repos.deployments.statuses.get = function(owner, repo, id, statusId, ht
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/deployments/:id/statuses', [owner, repo, id]);
             break;
@@ -2285,7 +2285,7 @@ endpoint.repos.downloads.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/downloads', [owner, repo]);
             break;
@@ -2350,7 +2350,7 @@ endpoint.repos.pages.builds.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/pages/builds', [owner, repo]);
             break;
@@ -2386,7 +2386,7 @@ endpoint.repos.releases.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/releases', [owner, repo]);
             break;
@@ -2433,7 +2433,7 @@ endpoint.repos.releases.assets.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/releases/:id/assets', [owner, repo, id]);
             break;
@@ -2579,7 +2579,7 @@ endpoint.repos.hooks.get = function(owner, repo, id, httpOptions) {
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/hooks', [owner, repo]);
             break;
@@ -3272,7 +3272,7 @@ endpoint.repos.issues.labels.delete = function(owner, repo, number, name, httpOp
         }
     }
     var url;
-    switch(arguments.length){
+    switch(arguments.length-2){
         case 0:
             url = parse('/repos/:owner/:repo/issues/:number/labels/:name', [owner, repo, number, name]);
             break;

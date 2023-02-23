@@ -4,5 +4,5 @@
  */
 step.listIssuesGithubApp = function () {
 
-	return endpoint.issues.get();
+	return endpoint.repos.issues.get();
 };
