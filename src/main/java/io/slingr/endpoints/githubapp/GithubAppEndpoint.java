@@ -54,9 +54,6 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
     @EndpointProperty
     private String clientSecret;
 
-    @EndpointProperty
-    private String scopes;
-
     private Token jsonWebToken = null;
 
     @EndpointDataStore
@@ -65,7 +62,7 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
     public GithubAppEndpoint() {
     }
 
-    // this constructor is for testing
+    // This constructor is for testing
     public GithubAppEndpoint(String appId, String privateKey, String webhookSecret) {
         this.appId = appId;
         this.privateKey = privateKey;
@@ -97,7 +94,7 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
         return new WebServiceResponse("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
                 "<html>\n" +
                 "<head>\n" +
-                "<title>Slack authentication</title>\n" +
+                "<title>GitHub authentication</title>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "</body>\n" +
@@ -133,8 +130,8 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
 
                     return conf;
                 } else {
-                    logger.warn(String.format("Problems trying to connect user [%s] to Slack: %s", userId, res.toString()));
-                    appLogger.warn(String.format("Problems trying to connect user [%s] to Slack: %s", userId, res.string("error")));
+                    logger.warn(String.format("Problems trying to connect user [%s] to GitHub: %s", userId, res.toString()));
+                    appLogger.warn(String.format("Problems trying to connect user [%s] to GitHub: %s", userId, res.string("error")));
                 }
             } else {
                 logger.info(String.format("Empty 'code' when try to connect user [%s] [%s]", userId, request.toString()));
@@ -194,206 +191,44 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
 
     // Internal methods
 
-    @EndpointFunction(name = "_appGet")
-    public Json appGet(FunctionRequest request) {
-        setAppRequestHeaders(request);
+    @EndpointFunction(name = "_get")
+    public Json get(FunctionRequest request) {
+        setRequestHeaders(request);
         Json res = defaultGetRequest(request);
         return res;
     }
 
-    @EndpointFunction(name = "_appPost")
-    public Json appPost(FunctionRequest request) {
-        setAppRequestHeaders(request);
+    @EndpointFunction(name = "_post")
+    public Json post(FunctionRequest request) {
+        setRequestHeaders(request);
         Json res = defaultPostRequest(request);
         return res;
     }
 
-    @EndpointFunction(name = "_appPut")
-    public Json appPut(FunctionRequest request) {
-        setAppRequestHeaders(request);
+    @EndpointFunction(name = "_put")
+    public Json put(FunctionRequest request) {
+        setRequestHeaders(request);
         Json res = defaultPutRequest(request);
         return res;
     }
 
-    @EndpointFunction(name = "_appPatch")
-    public Json appPatch(FunctionRequest request) {
-        setAppRequestHeaders(request);
+    @EndpointFunction(name = "_patch")
+    public Json patch(FunctionRequest request) {
+        setRequestHeaders(request);
         Json res = defaultPatchRequest(request);
         return res;
     }
 
-    @EndpointFunction(name = "_appDelete")
-    public Json appDelete(FunctionRequest request) {
-        setAppRequestHeaders(request);
+    @EndpointFunction(name = "_delete")
+    public Json delete(FunctionRequest request) {
+        setRequestHeaders(request);
         Json res = defaultDeleteRequest(request);
         return res;
-    }
-
-
-    @EndpointFunction(name = "_userGet")
-    public Json userGet(FunctionRequest request) {
-        try {
-            setUserRequestHeaders(request);
-            Json res = defaultGetRequest(request);
-            return res;
-        } catch (EndpointException restException) {
-            if (restException.getCode() == ErrorCode.CLIENT) {
-                users().sendUserDisconnectedEvent(request.getUserId());
-            }
-            throw restException;
-        }
-    }
-
-    @EndpointFunction(name = "_userPost")
-    public Json userPost(FunctionRequest request) {
-        try {
-            setUserRequestHeaders(request);
-            Json res = defaultPostRequest(request);
-            return res;
-        } catch (EndpointException restException) {
-            if (restException.getCode() == ErrorCode.CLIENT) {
-                users().sendUserDisconnectedEvent(request.getUserId());
-            }
-            throw restException;
-        }
-    }
-
-    @EndpointFunction(name = "_userPut")
-    public Json userPut(FunctionRequest request) {
-        try {
-            setUserRequestHeaders(request);
-            Json res = defaultPutRequest(request);
-            return res;
-        } catch (EndpointException restException) {
-            if (restException.getCode() == ErrorCode.CLIENT) {
-                users().sendUserDisconnectedEvent(request.getUserId());
-            }
-            throw restException;
-        }
-    }
-
-    @EndpointFunction(name = "_userPatch")
-    public Json userPatch(FunctionRequest request) {
-        try {
-            setUserRequestHeaders(request);
-            Json res = defaultPatchRequest(request);
-            return res;
-        } catch (EndpointException restException) {
-            if (restException.getCode() == ErrorCode.CLIENT) {
-                users().sendUserDisconnectedEvent(request.getUserId());
-            }
-            throw restException;
-        }
-    }
-
-    @EndpointFunction(name = "_userDelete")
-    public Json userDelete(FunctionRequest request) {
-        try {
-            setUserRequestHeaders(request);
-            Json res = defaultDeleteRequest(request);
-            return res;
-        } catch (EndpointException restException) {
-            if (restException.getCode() == ErrorCode.CLIENT) {
-                users().sendUserDisconnectedEvent(request.getUserId());
-            }
-            throw restException;
-        }
-    }
-
-    @EndpointFunction(name = "_installGet")
-    public Json installGet(FunctionRequest request) {
-        setInstallRequestHeaders(request);
-        Json res = defaultGetRequest(request);
-        return res;
-    }
-
-    @EndpointFunction(name = "_installPost")
-    public Json installPost(FunctionRequest request) {
-        setInstallRequestHeaders(request);
-        Json res = defaultPostRequest(request);
-        return res;
-    }
-
-    @EndpointFunction(name = "_installPut")
-    public Json installPut(FunctionRequest request) {
-        setInstallRequestHeaders(request);
-        Json res = defaultPutRequest(request);
-        return res;
-    }
-
-    @EndpointFunction(name = "_installPatch")
-    public Json installPatch(FunctionRequest request) {
-        setInstallRequestHeaders(request);
-        Json res = defaultPatchRequest(request);
-        return res;
-    }
-
-    @EndpointFunction(name = "_installDelete")
-    public Json installDelete(FunctionRequest request) {
-        setInstallRequestHeaders(request);
-        Json res = defaultDeleteRequest(request);
-        return res;
-    }
-
-    private void setAppRequestHeaders(FunctionRequest request) {
-        Json body = request.getJsonParams();
-        Json headers = body.json("headers");
-        if (headers == null) {
-            headers = Json.map();
-        }
-        headers.set("Authorization", "Bearer " + getJsonWebToken());
-        headers.set("Content-Type", "application/json");
-        if (headers.isEmpty("Accept")) {
-            headers.set("Accept", "application/vnd.github.machine-man-preview+json");
-        }
-        body.set("headers", headers);
-        request.getRequest().set("params", body);
-    }
-
-    private void setInstallRequestHeaders(FunctionRequest request) {
-        Json body = request.getJsonParams();
-        String account = body.string("account");
-        if (StringUtils.isBlank(account)) {
-            throw EndpointException.permanent(ErrorCode.ARGUMENT, "Account cannot be empty");
-        }
-        String token = getAccessTokenForAccount(account);
-        Json headers = body.json("headers");
-        if (headers == null) {
-            headers = Json.map();
-        }
-        headers.set("Authorization", "token " + token);
-        headers.set("Content-Type", "application/json");
-        if (headers.isEmpty("Accept")) {
-            headers.set("Accept", "application/vnd.github.machine-man-preview+json");
-        }
-        body.set("headers", headers);
-        request.getRequest().set("params", body);
-    }
-
-    private void setUserRequestHeaders(FunctionRequest request) {
-        Json userConfig = users().findById(request.getUserId());
-        if (userConfig == null || userConfig.isEmpty("access_token")) {
-            throw EndpointException.permanent(ErrorCode.CLIENT, String.format("User [%s] is not connected", request.getUserEmail()));
-        }
-        Json body = request.getJsonParams();
-        String token = userConfig.string("access_token");
-        Json headers = body.json("headers");
-        if (headers == null) {
-            headers = Json.map();
-        }
-        headers.set("Authorization", "token " + token);
-        headers.set("Content-Type", "application/json");
-        if (headers.isEmpty("Accept")) {
-            headers.set("Accept", "application/vnd.github.machine-man-preview+json");
-        }
-        body.set("headers", headers);
-        request.getRequest().set("params", body);
     }
 
     @EndpointFunction(name = "_syncInstallations")
     public Json syncInstallations(FunctionRequest request) {
         appLogger.info("Syncing installations");
-        // TODO we need to implement pagination here
         Json params = Json.map()
                 .set("path", "/app/installations")
                 .set("headers", Json.map()
@@ -416,6 +251,33 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
         return Json.map()
                 .set("updatedInstallations", updatedInstallations)
                 .set("createdInstallations", createdInstallations);
+    }
+
+    private void setRequestHeaders(FunctionRequest request) {
+        Json body = request.getJsonParams();
+        Json headers = body.json("headers");
+        if (headers == null) {
+            headers = Json.map();
+        }
+        String token;
+        Json userConfig = users().findById(request.getUserId());
+        if (userConfig != null && !userConfig.isEmpty("access_token")) {
+            token = userConfig.string("access_token");
+            headers.set("Authorization", "token " + token);
+            logger.info("Request using user token");
+        }
+        else {
+            users().sendUserDisconnectedEvent(request.getUserId());
+            headers.set("Authorization", "Bearer " + getJsonWebToken());
+            logger.info("Request using app token (JWT)");
+        }
+
+        headers.set("Content-Type", "application/json");
+        if (headers.isEmpty("Accept")) {
+            headers.set("Accept", "application/vnd.github.machine-man-preview+json");
+        }
+        body.set("headers", headers);
+        request.getRequest().set("params", body);
     }
 
     // Events
@@ -450,7 +312,6 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
         events().send("webhook", body, null);
         return Json.map().set("status", "ok");
     }
-
 
     private boolean saveInstallationInfo(Json installation) {
         String account = installation.json("account").string("login");
@@ -488,7 +349,7 @@ public class GithubAppEndpoint extends HttpPerUserEndpoint {
                 );
         Json requestBody = Json.map().set("params", requestParams);
         FunctionRequest request = new FunctionRequest(requestBody);
-        Json res = installGet(request);
+        Json res = get(request);
         List<String> reposNames = new ArrayList<>();
         for (Json repo : res.jsons("repositories")) {
             reposNames.add(repo.string("name"));

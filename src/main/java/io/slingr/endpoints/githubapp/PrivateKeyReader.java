@@ -19,6 +19,8 @@ package io.slingr.endpoints.githubapp;
  *
  ****************************************************************************/
 
+import jakarta.xml.bind.DatatypeConverter;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
@@ -30,8 +32,6 @@ import java.security.spec.RSAPrivateCrtKeySpec;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.bind.DatatypeConverter;
 
 
 /**

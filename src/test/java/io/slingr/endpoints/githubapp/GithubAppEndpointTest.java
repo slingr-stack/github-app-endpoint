@@ -31,13 +31,13 @@ public class GithubAppEndpointTest {
         Json request = Json.map().set("params", Json.map()
                 .set("account", "slingr-stack")
                 .set("path", "/repos/slingr-stack/pepito-test/issues/1228"));
-        Json res = endpoint.appGet(new FunctionRequest(request));
+        Json res = endpoint.get(new FunctionRequest(request));
         assertNotNull(res);
         assertEquals("test issue 5", res.string("title"));
         request = Json.map().set("params", Json.map()
                 .set("account", "slingr-stack")
                 .set("path", "/repos/slingr-stack/pepito-test/issues/1232"));
-        res = endpoint.appGet(new FunctionRequest(request));
+        res = endpoint.get(new FunctionRequest(request));
         assertNotNull(res);
         assertEquals("test issue 11", res.string("title"));
     }
