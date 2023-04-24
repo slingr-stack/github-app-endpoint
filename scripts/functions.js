@@ -14,10 +14,6 @@ endpoint.repos = {};
 
 endpoint.repos.events = {};
 
-endpoint.repos.issues = {};
-
-endpoint.repos.issues.events = {};
-
 endpoint.networks = {};
 
 endpoint.networks.events = {};
@@ -118,9 +114,15 @@ endpoint.user.issues = {};
 
 endpoint.orgs.issues = {};
 
+endpoint.repos.issues = {};
+
 endpoint.repos.assignees = {};
 
 endpoint.repos.issues.comments = {};
+
+endpoint.repos.issues.events = {};
+
+endpoint.repos.issues.events.byIssue = {};
 
 endpoint.repos.labels = {};
 
@@ -162,9 +164,9 @@ endpoint.orgs.members = {};
 
 endpoint.orgs.publicMembers = {};
 
-endpoint.orgs.memberships = {};
-
 endpoint.orgs.invitations = {};
+
+endpoint.orgs.memberships = {};
 
 endpoint.user.memberships = {};
 
@@ -202,6 +204,10 @@ endpoint.projects.columns = {};
 
 endpoint.projects.columns.cards = {};
 
+endpoint.projects.columns.cards.byId = {};
+
+endpoint.projects.columns.byId = {};
+
 endpoint.repos.pulls = {};
 
 endpoint.repos.pulls.commits = {};
@@ -215,6 +221,8 @@ endpoint.repos.pulls.reviews = {};
 endpoint.repos.pulls.reviews.comments = {};
 
 endpoint.repos.pulls.comments = {};
+
+endpoint.repos.pulls.comments.byId = {};
 
 endpoint.repos.pulls.requestedReviewers = {};
 
@@ -308,6 +316,8 @@ endpoint.repos.releases.tags = {};
 
 endpoint.repos.releases.assets = {};
 
+endpoint.repos.releases.assets.byId = {};
+
 endpoint.repos.stats = {};
 
 endpoint.repos.stats.contributors = {};
@@ -382,14 +392,6 @@ endpoint.reactions = {};
 
 endpoint.repos.pulls.reviews.dismissals = {};
 
-endpoint.syncInstallations = {};
-
-endpoint.utils = {};
-
-endpoint.utils.formatTimestamp = {};
-
-endpoint.utils.parseTimestamp = {};
-
 endpoint.events.get = function(httpOptions) {
     var url = parse('/events');
     sys.logs.debug('[githubApp] GET from: ' + url);
@@ -403,37 +405,6 @@ endpoint.repos.events.get = function(owner, repo, httpOptions) {
         return;
     }
     var url = parse('/repos/:owner/:repo/events', [owner, repo]);
-    sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
-};
-
-endpoint.repos.issues.events.get = function(owner, repo, id, httpOptions) {
-    if(!httpOptions){
-        for (var i = 0 ; i < arguments.length; i++){
-            if (isObject(arguments[i])){
-                httpOptions = arguments[i];
-            }
-        }
-    }
-    var url;
-    switch(arguments.length-4){
-        case 0:
-            url = parse('/repos/:owner/:repo/issues/events', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/issues/:issue_number/events', [owner, repo, issueNumber]);
-            break;
-        case 2:
-            url = parse('/repos/:owner/:repo/issues/events', [owner, repo]);
-            break;
-        case 3:
-            url = parse('/repos/:owner/:repo/issues/events/:id', [owner, repo, id]);
-            break;
-        default:
-            sys.logs.error('Invalid argument received.');
-            return;
-    }
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
@@ -462,25 +433,11 @@ endpoint.orgs.events.get = function(org, httpOptions) {
 };
 
 endpoint.users.receivedEvents.get = function(username, httpOptions) {
-    if(!httpOptions){
-        for (var i = 0 ; i < arguments.length; i++){
-            if (isObject(arguments[i])){
-                httpOptions = arguments[i];
-            }
-        }
+    if (!username) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [username].');
+        return;
     }
-    var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/users/:username/received_events', [username]);
-            break;
-        case 1:
-            url = parse('/users/:username/received_events', [username]);
-            break;
-        default:
-            sys.logs.error('Invalid argument received.');
-            return;
-    }
+    var url = parse('/users/:username/received_events', [username]);
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
@@ -593,24 +550,25 @@ endpoint.user.starred.get = function(owner, repo, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
-            url = parse('/user/starred');
-            break;
-        case 1:
-            url = parse('/user/starred/:owner/:repo', [owner, repo]);
-            break;
-        default:
+			url = parse('/user/starred');
+			break;
+		case 2:
+			url = parse('/user/starred/:owner/:repo', [owner, repo]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.subscribers.get = function(owner, repo, httpOptions) {
@@ -669,27 +627,28 @@ endpoint.gists.get = function(id, sha, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-3){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
-            url = parse('/gists');
-            break;
-        case 1:
-            url = parse('/gists/:id', [id]);
-            break;
-        case 2:
-            url = parse('/gists/:id/:sha', [id, sha]);
-            break;
-        default:
+			url = parse('/gists');
+			break;
+		case 1:
+			url = parse('/gists/:id', [id]);
+			break;
+		case 2:
+			url = parse('/gists/:id/:sha', [id, sha]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.gists.public.get = function(httpOptions) {
@@ -766,24 +725,25 @@ endpoint.repos.git.refs.get = function(owner, repo, ref, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/git/refs/:ref', [owner, repo, ref]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/git/refs', [owner, repo]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 3:
+			url = parse('/repos/:owner/:repo/git/refs/:ref', [owner, repo, ref]);
+			break;
+		case 2:
+			url = parse('/repos/:owner/:repo/git/refs', [owner, repo]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.git.tags.get = function(owner, repo, sha, httpOptions) {
@@ -831,24 +791,25 @@ endpoint.app.installations.get = function(installationId, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
-            url = parse('/app/installations');
-            break;
-        case 1:
-            url = parse('/app/installations/:installation_id', [installationId]);
-            break;
-        default:
+			url = parse('/app/installations');
+			break;
+		case 1:
+			url = parse('/app/installations/:installation_id', [installationId]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.user.installations.get = function(httpOptions) {
@@ -942,24 +903,25 @@ endpoint.repos.issues.get = function(owner, repo, number, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/issues', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/issues/:number', [owner, repo, number]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/issues', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/issues/:number', [owner, repo, number]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.assignees.get = function(owner, repo, assignee, httpOptions) {
@@ -967,24 +929,25 @@ endpoint.repos.assignees.get = function(owner, repo, assignee, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/assignees', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/assignees/:assignee', [owner, repo, assignee]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/assignees', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/assignees/:assignee', [owner, repo, assignee]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.issues.comments.get = function(owner, repo, number, httpOptions) {
@@ -992,24 +955,62 @@ endpoint.repos.issues.comments.get = function(owner, repo, number, httpOptions) 
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/issues/:number/comments', [owner, repo, number]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/issues/comments', [owner, repo]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 3:
+			url = parse('/repos/:owner/:repo/issues/:number/comments', [owner, repo, number]);
+			break;
+		case 2:
+			url = parse('/repos/:owner/:repo/issues/comments', [owner, repo]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
+};
+
+endpoint.repos.issues.events.byIssue.get = function(owner, repo, issueNumber, httpOptions) {
+    if (!owner || !repo || !issueNumber) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [owner,repo,issueNumber].');
+        return;
+    }
+    var url = parse('/repos/:owner/:repo/issues/:issue_number/events', [owner, repo, issueNumber]);
+    sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
+};
+
+endpoint.repos.issues.events.get = function(owner, repo, id, httpOptions) {
+    if(!httpOptions){
+        for (var i = 0 ; i < arguments.length; i++){
+            if (isObject(arguments[i])){
+                httpOptions = arguments[i];
+                arguments[i] = undefined;
+            }
+        } 
+    }
+    var url;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/issues/events', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/issues/events/:id', [owner, repo, id]);
+			break;
+		default:
+            sys.logs.error('Invalid argument received.');
+            return;
+    }
+    sys.logs.debug('[githubApp] GET from: ' + url);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.labels.get = function(owner, repo, name, httpOptions) {
@@ -1017,24 +1018,25 @@ endpoint.repos.labels.get = function(owner, repo, name, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/labels', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/labels/:name', [owner, repo, name]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/labels', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/labels/:name', [owner, repo, name]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.issues.labels.get = function(owner, repo, number, httpOptions) {
@@ -1064,24 +1066,25 @@ endpoint.repos.milestones.get = function(owner, repo, number, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/milestones', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/milestones/:number', [owner, repo, number]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/milestones', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/milestones/:number', [owner, repo, number]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.issues.timeline.get = function(owner, repo, issueNumber, httpOptions) {
@@ -1100,24 +1103,25 @@ endpoint.codesOfConduct.get = function(key, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
-            url = parse('/codes_of_conduct');
-            break;
-        case 1:
-            url = parse('/codes_of_conduct/:key', [key]);
-            break;
-        default:
+			url = parse('/codes_of_conduct');
+			break;
+		case 1:
+			url = parse('/codes_of_conduct/:key', [key]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.get = function(owner, repo, archiveFormat, ref, httpOptions) {
@@ -1125,30 +1129,25 @@ endpoint.repos.get = function(owner, repo, archiveFormat, ref, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-4){
-        case 0:
-            url = parse('/repos/:owner/:repo', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo', [owner, repo]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 2:
-            url = parse('/repos/:owner/:repo', [owner, repo]);
-            break;
-        case 3:
-            url = parse('/repos/:owner/:repo/:archive_format/:ref', [owner, repo, archiveFormat, ref]);
-            break;
-        default:
+			url = parse('/repos/:owner/:repo', [owner, repo]);
+			break;
+		case 4:
+			url = parse('/repos/:owner/:repo/:archive_format/:ref', [owner, repo, archiveFormat, ref]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.community.codeOfConduct.get = function(owner, repo, httpOptions) {
@@ -1174,24 +1173,25 @@ endpoint.gitignore.templates.get = function(name, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
-            url = parse('/gitignore/templates');
-            break;
-        case 1:
-            url = parse('/gitignore/templates/:name', [name]);
-            break;
-        default:
+			url = parse('/gitignore/templates');
+			break;
+		case 1:
+			url = parse('/gitignore/templates/:name', [name]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.licenses.get = function(license, httpOptions) {
@@ -1199,24 +1199,25 @@ endpoint.licenses.get = function(license, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
-            url = parse('/licenses');
-            break;
-        case 1:
-            url = parse('/licenses/:license', [license]);
-            break;
-        default:
+			url = parse('/licenses');
+			break;
+		case 1:
+			url = parse('/licenses/:license', [license]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.license.get = function(owner, repo, httpOptions) {
@@ -1285,30 +1286,25 @@ endpoint.orgs.members.get = function(org, username, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-4){
-        case 0:
-            url = parse('/orgs/:org/members', [org]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 1:
-            url = parse('/orgs/:org/members/:username', [org, username]);
-            break;
-        case 2:
-            url = parse('/orgs/:org/members', [org]);
-            break;
-        case 3:
-            url = parse('/orgs/:org/members/:username', [org, username]);
-            break;
-        default:
+			url = parse('/orgs/:org/members', [org]);
+			break;
+		case 2:
+			url = parse('/orgs/:org/members/:username', [org, username]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.orgs.publicMembers.get = function(org, username, httpOptions) {
@@ -1316,77 +1312,44 @@ endpoint.orgs.publicMembers.get = function(org, username, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-4){
-        case 0:
-            url = parse('/orgs/:org/public_members', [org]);
-            break;
-        case 1:
-            url = parse('/orgs/:org/public_members/:username', [org, username]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 2:
-            url = parse('/orgs/:org/public_members', [org]);
-            break;
-        case 3:
-            url = parse('/orgs/:org/public_members/:username', [org, username]);
-            break;
-        default:
+			url = parse('/orgs/:org/public_members/:username', [org, username]);
+			break;
+		case 1:
+			url = parse('/orgs/:org/public_members', [org]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
+    sys.logs.debug('[githubApp] GET from: ' + url);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
+};
+
+endpoint.orgs.invitations.get = function(org, httpOptions) {
+    if (!org) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [org].');
+        return;
+    }
+    var url = parse('/orgs/:org/invitations', [org]);
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
 };
 
 endpoint.orgs.memberships.get = function(org, username, httpOptions) {
-    if(!httpOptions){
-        for (var i = 0 ; i < arguments.length; i++){
-            if (isObject(arguments[i])){
-                httpOptions = arguments[i];
-            }
-        }
+    if (!org || !username) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [org,username].');
+        return;
     }
-    var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/orgs/:org/memberships/:username', [org, username]);
-            break;
-        case 1:
-            url = parse('/orgs/:org/memberships/:username', [org, username]);
-            break;
-        default:
-            sys.logs.error('Invalid argument received.');
-            return;
-    }
-    sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
-};
-
-endpoint.orgs.invitations.get = function(org, httpOptions) {
-    if(!httpOptions){
-        for (var i = 0 ; i < arguments.length; i++){
-            if (isObject(arguments[i])){
-                httpOptions = arguments[i];
-            }
-        }
-    }
-    var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/orgs/:org/invitations', [org]);
-            break;
-        case 1:
-            url = parse('/orgs/:org/invitations', [org]);
-            break;
-        default:
-            sys.logs.error('Invalid argument received.');
-            return;
-    }
+    var url = parse('/orgs/:org/memberships/:username', [org, username]);
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
@@ -1397,24 +1360,25 @@ endpoint.user.memberships.orgs.get = function(org, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 0:
-            url = parse('/user/memberships/orgs');
-            break;
-        case 1:
-            url = parse('/user/memberships/orgs/:org', [org]);
-            break;
-        default:
+			url = parse('/user/memberships/orgs');
+			break;
+		case 1:
+			url = parse('/user/memberships/orgs/:org', [org]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.orgs.outsideCollaborators.get = function(org, httpOptions) {
@@ -1466,24 +1430,25 @@ endpoint.teams.members.get = function(id, username, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/teams/:id/members', [id]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 1:
-            url = parse('/teams/:id/members/:username', [id, username]);
-            break;
-        default:
+			url = parse('/teams/:id/members', [id]);
+			break;
+		case 2:
+			url = parse('/teams/:id/members/:username', [id, username]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.teams.memberships.get = function(id, username, httpOptions) {
@@ -1513,24 +1478,25 @@ endpoint.teams.repos.get = function(id, owner, repo, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/teams/:id/repos', [id]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 1:
-            url = parse('/teams/:id/repos/:owner/:repo', [id, owner, repo]);
-            break;
-        default:
+			url = parse('/teams/:id/repos', [id]);
+			break;
+		case 3:
+			url = parse('/teams/:id/repos/:owner/:repo', [id, owner, repo]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.user.teams.get = function(httpOptions) {
@@ -1545,24 +1511,25 @@ endpoint.orgs.hooks.get = function(org, id, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/orgs/:org/hooks', [org]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 1:
-            url = parse('/orgs/:org/hooks/:id', [org, id]);
-            break;
-        default:
+			url = parse('/orgs/:org/hooks', [org]);
+			break;
+		case 2:
+			url = parse('/orgs/:org/hooks/:id', [org, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.orgs.blocks.get = function(org, username, httpOptions) {
@@ -1570,24 +1537,25 @@ endpoint.orgs.blocks.get = function(org, username, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/orgs/:org/blocks', [org]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 1:
-            url = parse('/orgs/:org/blocks/:username', [org, username]);
-            break;
-        default:
+			url = parse('/orgs/:org/blocks', [org]);
+			break;
+		case 2:
+			url = parse('/orgs/:org/blocks/:username', [org, username]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.projects.get = function(owner, repo, httpOptions) {
@@ -1623,51 +1591,45 @@ endpoint.projects.get = function(id, httpOptions) {
     return endpoint._get(options);
 };
 
-endpoint.projects.columns.cards.get = function(id, httpOptions) {
-    if(!httpOptions){
-        for (var i = 0 ; i < arguments.length; i++){
-            if (isObject(arguments[i])){
-                httpOptions = arguments[i];
-            }
-        }
+endpoint.projects.columns.cards.get = function(columnId, httpOptions) {
+    if (!columnId) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [columnId].');
+        return;
     }
-    var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/projects/columns/:column_id/cards', [columnId]);
-            break;
-        case 1:
-            url = parse('/projects/columns/cards/:id', [id]);
-            break;
-        default:
-            sys.logs.error('Invalid argument received.');
-            return;
-    }
+    var url = parse('/projects/columns/:column_id/cards', [columnId]);
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
 };
 
-endpoint.projects.columns.get = function(id, httpOptions) {
-    if(!httpOptions){
-        for (var i = 0 ; i < arguments.length; i++){
-            if (isObject(arguments[i])){
-                httpOptions = arguments[i];
-            }
-        }
+endpoint.projects.columns.cards.byId.get = function(id, httpOptions) {
+    if (!id) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [id].');
+        return;
     }
-    var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/projects/:project_id/columns', [projectId]);
-            break;
-        case 1:
-            url = parse('/projects/columns/:id', [id]);
-            break;
-        default:
-            sys.logs.error('Invalid argument received.');
-            return;
+    var url = parse('/projects/columns/cards/:id', [id]);
+    sys.logs.debug('[githubApp] GET from: ' + url);
+    var options = checkHttpOptions(url, httpOptions);
+    return endpoint._get(options);
+};
+
+endpoint.projects.columns.get = function(projectId, httpOptions) {
+    if (!projectId) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [projectId].');
+        return;
     }
+    var url = parse('/projects/:project_id/columns', [projectId]);
+    sys.logs.debug('[githubApp] GET from: ' + url);
+    var options = checkHttpOptions(url, httpOptions);
+    return endpoint._get(options);
+};
+
+endpoint.projects.columns.byId.get = function(id, httpOptions) {
+    if (!id) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [id].');
+        return;
+    }
+    var url = parse('/projects/columns/:id', [id]);
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
@@ -1678,24 +1640,25 @@ endpoint.repos.pulls.get = function(owner, repo, number, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/pulls', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/pulls/:number', [owner, repo, number]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/pulls', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/pulls/:number', [owner, repo, number]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.pulls.commits.get = function(owner, repo, number, httpOptions) {
@@ -1736,24 +1699,25 @@ endpoint.repos.pulls.reviews.get = function(owner, repo, number, id, httpOptions
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/pulls/:number/reviews', [owner, repo, number]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/pulls/:number/reviews/:id', [owner, repo, number, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 3:
+			url = parse('/repos/:owner/:repo/pulls/:number/reviews', [owner, repo, number]);
+			break;
+		case 4:
+			url = parse('/repos/:owner/:repo/pulls/:number/reviews/:id', [owner, repo, number, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.pulls.reviews.comments.get = function(owner, repo, number, id, httpOptions) {
@@ -1767,29 +1731,38 @@ endpoint.repos.pulls.reviews.comments.get = function(owner, repo, number, id, ht
     return endpoint._get(options);
 };
 
-endpoint.repos.pulls.comments.get = function(owner, repo, id, httpOptions) {
+endpoint.repos.pulls.comments.get = function(owner, repo, number, httpOptions) {
     if(!httpOptions){
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-3){
-        case 0:
-            url = parse('/repos/:owner/:repo/pulls/:number/comments', [owner, repo, number]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/pulls/comments', [owner, repo]);
-            break;
-        case 2:
-            url = parse('/repos/:owner/:repo/pulls/comments/:id', [owner, repo, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 3:
+			url = parse('/repos/:owner/:repo/pulls/:number/comments', [owner, repo, number]);
+			break;
+		case 2:
+			url = parse('/repos/:owner/:repo/pulls/comments', [owner, repo]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
+    sys.logs.debug('[githubApp] GET from: ' + url);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
+};
+
+endpoint.repos.pulls.comments.byId.get = function(owner, repo, id, httpOptions) {
+    if (!owner || !repo || !id) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [owner,repo,id].');
+        return;
+    }
+    var url = parse('/repos/:owner/:repo/pulls/comments/:id', [owner, repo, id]);
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
@@ -1946,24 +1919,25 @@ endpoint.repos.branches.get = function(owner, repo, branch, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/branches', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/branches/:branch', [owner, repo, branch]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/branches', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/branches/:branch', [owner, repo, branch]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.branches.protection.get = function(owner, repo, branch, httpOptions) {
@@ -2059,24 +2033,25 @@ endpoint.repos.collaborators.get = function(owner, repo, username, httpOptions) 
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/collaborators', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/collaborators/:username', [owner, repo, username]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/collaborators', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/collaborators/:username', [owner, repo, username]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.collaborators.permission.get = function(owner, repo, username, httpOptions) {
@@ -2095,24 +2070,25 @@ endpoint.repos.comments.get = function(owner, repo, id, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/comments', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/comments/:id', [owner, repo, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/comments', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/comments/:id', [owner, repo, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.commits.comments.get = function(owner, repo, ref, httpOptions) {
@@ -2142,30 +2118,25 @@ endpoint.repos.commits.get = function(owner, repo, sha, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-4){
-        case 0:
-            url = parse('/repos/:owner/:repo/commits', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/commits/:sha', [owner, repo, sha]);
-            break;
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
         case 2:
-            url = parse('/repos/:owner/:repo/commits/:ref', [owner, repo, ref]);
-            break;
-        case 3:
-            url = parse('/repos/:owner/:repo/commits/:sha', [owner, repo, sha]);
-            break;
-        default:
+			url = parse('/repos/:owner/:repo/commits', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/commits/:sha', [owner, repo, sha]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.compare.get = function(owner, repo, baseCommitSuspensivePointsHeadCommit, httpOptions) {
@@ -2206,24 +2177,25 @@ endpoint.repos.keys.get = function(owner, repo, id, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/keys', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/keys/:id', [owner, repo, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/keys', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/keys/:id', [owner, repo, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.deployments.get = function(owner, repo, deploymentId, httpOptions) {
@@ -2231,24 +2203,25 @@ endpoint.repos.deployments.get = function(owner, repo, deploymentId, httpOptions
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/deployments', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/deployments/:deployment_id', [owner, repo, deploymentId]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/deployments', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/deployments/:deployment_id', [owner, repo, deploymentId]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.deployments.statuses.get = function(owner, repo, id, statusId, httpOptions) {
@@ -2256,24 +2229,25 @@ endpoint.repos.deployments.statuses.get = function(owner, repo, id, statusId, ht
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/deployments/:id/statuses', [owner, repo, id]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/deployments/:id/statuses/:status_id', [owner, repo, id, statusId]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 3:
+			url = parse('/repos/:owner/:repo/deployments/:id/statuses', [owner, repo, id]);
+			break;
+		case 4:
+			url = parse('/repos/:owner/:repo/deployments/:id/statuses/:status_id', [owner, repo, id, statusId]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.downloads.get = function(owner, repo, id, httpOptions) {
@@ -2281,24 +2255,25 @@ endpoint.repos.downloads.get = function(owner, repo, id, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/downloads', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/downloads/:id', [owner, repo, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/downloads', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/downloads/:id', [owner, repo, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.forks.get = function(owner, repo, httpOptions) {
@@ -2346,24 +2321,25 @@ endpoint.repos.pages.builds.get = function(owner, repo, id, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/pages/builds', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/pages/builds/:id', [owner, repo, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/pages/builds', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/pages/builds/:id', [owner, repo, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.pages.builds.latest.get = function(owner, repo, httpOptions) {
@@ -2382,24 +2358,25 @@ endpoint.repos.releases.get = function(owner, repo, id, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/releases', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/releases/:id', [owner, repo, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/releases', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/releases/:id', [owner, repo, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.repos.releases.latest.get = function(owner, repo, httpOptions) {
@@ -2425,25 +2402,22 @@ endpoint.repos.releases.tags.get = function(owner, repo, tag, httpOptions) {
 };
 
 endpoint.repos.releases.assets.get = function(owner, repo, id, httpOptions) {
-    if(!httpOptions){
-        for (var i = 0 ; i < arguments.length; i++){
-            if (isObject(arguments[i])){
-                httpOptions = arguments[i];
-            }
-        }
+    if (!owner || !repo || !id) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [owner,repo,id].');
+        return;
     }
-    var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/releases/:id/assets', [owner, repo, id]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/releases/assets/:id', [owner, repo, id]);
-            break;
-        default:
-            sys.logs.error('Invalid argument received.');
-            return;
+    var url = parse('/repos/:owner/:repo/releases/:id/assets', [owner, repo, id]);
+    sys.logs.debug('[githubApp] GET from: ' + url);
+    var options = checkHttpOptions(url, httpOptions);
+    return endpoint._get(options);
+};
+
+endpoint.repos.releases.assets.byId.get = function(owner, repo, id, httpOptions) {
+    if (!owner || !repo || !id) {
+        sys.logs.error('Invalid argument received. This helper should receive the following parameters as non-empty strings: [owner,repo,id].');
+        return;
     }
+    var url = parse('/repos/:owner/:repo/releases/assets/:id', [owner, repo, id]);
     sys.logs.debug('[githubApp] GET from: ' + url);
     var options = checkHttpOptions(url, httpOptions);
     return endpoint._get(options);
@@ -2575,24 +2549,25 @@ endpoint.repos.hooks.get = function(owner, repo, id, httpOptions) {
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/hooks', [owner, repo]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/hooks/:id', [owner, repo, id]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 2:
+			url = parse('/repos/:owner/:repo/hooks', [owner, repo]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/hooks/:id', [owner, repo, id]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] GET from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._get(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._get(options);
 };
 
 endpoint.search.repositories.get = function(httpOptions) {
@@ -3268,24 +3243,25 @@ endpoint.repos.issues.labels.delete = function(owner, repo, number, name, httpOp
         for (var i = 0 ; i < arguments.length; i++){
             if (isObject(arguments[i])){
                 httpOptions = arguments[i];
+                arguments[i] = undefined;
             }
-        }
+        } 
     }
     var url;
-    switch(arguments.length-2){
-        case 0:
-            url = parse('/repos/:owner/:repo/issues/:number/labels/:name', [owner, repo, number, name]);
-            break;
-        case 1:
-            url = parse('/repos/:owner/:repo/issues/:number/labels', [owner, repo, number]);
-            break;
-        default:
+    switch(httpOptions ? arguments.length - 1 : arguments.length){
+        case 4:
+			url = parse('/repos/:owner/:repo/issues/:number/labels/:name', [owner, repo, number, name]);
+			break;
+		case 3:
+			url = parse('/repos/:owner/:repo/issues/:number/labels', [owner, repo, number]);
+			break;
+		default:
             sys.logs.error('Invalid argument received.');
             return;
     }
     sys.logs.debug('[githubApp] DELETE from: ' + url);
-    var options = checkHttpOptions(url, httpOptions);
-    return endpoint._delete(options);
+	var options = checkHttpOptions(url, httpOptions);
+	return endpoint._delete(options);
 };
 
 endpoint.repos.milestones.delete = function(owner, repo, number, httpOptions) {
@@ -4263,10 +4239,6 @@ endpoint.repos.contents.put = function(owner, repo, path, httpOptions) {
     return endpoint._put(options);
 };
 
-endpoint.syncInstallations = function() {
-    return endpoint._syncInstallations({});
-};
-
 ////////////////////////////////////
 // Public API - Generic Functions //
 ////////////////////////////////////
@@ -4306,6 +4278,8 @@ endpoint.options = function(url, httpOptions, callbackData, callbacks) {
     return endpoint._options(options, callbackData, callbacks);
 };
 
+endpoint.utils = {};
+            
 endpoint.utils.parseTimestamp = function(dateString) {
     if (!dateString) {
         return null;
@@ -4338,6 +4312,22 @@ endpoint.utils.formatTimestamp = function(date) {
 ///////////////////////
 //  Private helpers  //
 ///////////////////////
+
+var mergeJSON = function (json1, json2) {
+    const result = {};
+    var key;
+    for (key in json1) {
+        if(json1.hasOwnProperty(key)) result[key] = json1[key];
+    }
+    for (key in json2) {
+        if(json2.hasOwnProperty(key)) result[key] = json2[key];
+    }
+    return result;
+}
+
+var concatQuery = function (url, key, value) {
+    return url + ((!url || url.indexOf('?') < 0) ? '?' : '&') + key + "=" + value;
+};
 
 var checkHttpOptions = function (url, options) {
     options = options || {};

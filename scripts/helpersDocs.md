@@ -9,14 +9,14 @@ The Javascript API of the githubApp endpoint has three pieces:
 ## HTTP requests
 You can make `GET`,`POST`,`DELETE`,`PATCH`,`PUT` requests to the [githubApp API](API_URL_HERE) like this:
 ```javascript
-var response = app.endpoints.githubApp.get('/repos/:owner/:repo/traffic/views')
-var response = app.endpoints.githubApp.post('/repos/:owner/:repo/pulls/:number/reviews', body)
-var response = app.endpoints.githubApp.post('/repos/:owner/:repo/pulls/:number/reviews')
-var response = app.endpoints.githubApp.delete('/reactions/:id')
-var response = app.endpoints.githubApp.patch('/user/memberships/orgs/:org', body)
-var response = app.endpoints.githubApp.patch('/user/memberships/orgs/:org')
-var response = app.endpoints.githubApp.put('/repos/:owner/:repo/pulls/:number/reviews/:id/dismissals', body)
-var response = app.endpoints.githubApp.put('/repos/:owner/:repo/pulls/:number/reviews/:id/dismissals')
+var response = app.endpoints.githubApp.get('/orgs/:org/teams')
+var response = app.endpoints.githubApp.post('/repos/:owner/:repo/git/refs', body)
+var response = app.endpoints.githubApp.post('/repos/:owner/:repo/git/refs')
+var response = app.endpoints.githubApp.delete('/orgs/:org/outside_collaborators/:username')
+var response = app.endpoints.githubApp.patch('/repos/:owner/:repo/git/refs/:ref', body)
+var response = app.endpoints.githubApp.patch('/repos/:owner/:repo/git/refs/:ref')
+var response = app.endpoints.githubApp.put('/notifications', body)
+var response = app.endpoints.githubApp.put('/notifications')
 ```
 
 Please take a look at the documentation of the [HTTP endpoint](https://github.com/slingr-stack/http-endpoint#javascript-api)
@@ -42,30 +42,6 @@ app.endpoints.githubApp.events.get()
 app.endpoints.githubApp.repos.events.get(owner, repo)
 ```
 ---
-* API URL: '/repos/:owner/:repo/issues/events'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.issues.events.get(owner, repo)
-```
----
-* API URL: '/repos/:owner/:repo/issues/:issue_number/events'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.issues.events.get(owner, repo, issueNumber)
-```
----
-* API URL: '/repos/:owner/:repo/issues/events'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.issues.events.get(owner, repo)
-```
----
-* API URL: '/repos/:owner/:repo/issues/events/:id'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.issues.events.get(owner, repo, id)
-```
----
 * API URL: '/networks/:owner/:repo/events'
 * HTTP Method: 'GET'
 ```javascript
@@ -76,12 +52,6 @@ app.endpoints.githubApp.networks.events.get(owner, repo)
 * HTTP Method: 'GET'
 ```javascript
 app.endpoints.githubApp.orgs.events.get(org)
-```
----
-* API URL: '/users/:username/received_events'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.users.receivedEvents.get(username)
 ```
 ---
 * API URL: '/users/:username/received_events'
@@ -159,7 +129,7 @@ app.endpoints.githubApp.user.starred.get()
 * API URL: '/user/starred/:owner/:repo'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.user.starred.get(owner, repo)
+app.endpoints.githubApp.user.starred.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/subscribers'
@@ -201,13 +171,13 @@ app.endpoints.githubApp.gists.get()
 * API URL: '/gists/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.gists.get(id)
+app.endpoints.githubApp.gists.get()
 ```
 ---
 * API URL: '/gists/:id/:sha'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.gists.get(id, sha)
+app.endpoints.githubApp.gists.get(id)
 ```
 ---
 * API URL: '/gists/public'
@@ -255,13 +225,13 @@ app.endpoints.githubApp.repos.git.commits.get(owner, repo, sha)
 * API URL: '/repos/:owner/:repo/git/refs/:ref'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.git.refs.get(owner, repo, ref)
+app.endpoints.githubApp.repos.git.refs.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/git/refs'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.git.refs.get(owner, repo)
+app.endpoints.githubApp.repos.git.refs.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/git/tags/:sha'
@@ -297,7 +267,7 @@ app.endpoints.githubApp.app.installations.get()
 * API URL: '/app/installations/:installation_id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.app.installations.get(installationId)
+app.endpoints.githubApp.app.installations.get()
 ```
 ---
 * API URL: '/user/installations'
@@ -363,49 +333,67 @@ app.endpoints.githubApp.orgs.issues.get(org)
 * API URL: '/repos/:owner/:repo/issues'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.issues.get(owner, repo)
+app.endpoints.githubApp.repos.issues.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/issues/:number'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.issues.get(owner, repo, number)
+app.endpoints.githubApp.repos.issues.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/assignees'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.assignees.get(owner, repo)
+app.endpoints.githubApp.repos.assignees.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/assignees/:assignee'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.assignees.get(owner, repo, assignee)
+app.endpoints.githubApp.repos.assignees.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/issues/:number/comments'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.issues.comments.get(owner, repo, number)
+app.endpoints.githubApp.repos.issues.comments.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/issues/comments'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.issues.comments.get(owner, repo)
+app.endpoints.githubApp.repos.issues.comments.get(owner)
+```
+---
+* API URL: '/repos/:owner/:repo/issues/:issue_number/events'
+* HTTP Method: 'GET'
+```javascript
+app.endpoints.githubApp.repos.issues.events.byIssue.get(owner, repo, issueNumber)
+```
+---
+* API URL: '/repos/:owner/:repo/issues/events'
+* HTTP Method: 'GET'
+```javascript
+app.endpoints.githubApp.repos.issues.events.get(owner)
+```
+---
+* API URL: '/repos/:owner/:repo/issues/events/:id'
+* HTTP Method: 'GET'
+```javascript
+app.endpoints.githubApp.repos.issues.events.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/labels'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.labels.get(owner, repo)
+app.endpoints.githubApp.repos.labels.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/labels/:name'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.labels.get(owner, repo, name)
+app.endpoints.githubApp.repos.labels.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/issues/:number/labels'
@@ -423,13 +411,13 @@ app.endpoints.githubApp.repos.milestones.labels.get(owner, repo, number)
 * API URL: '/repos/:owner/:repo/milestones'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.milestones.get(owner, repo)
+app.endpoints.githubApp.repos.milestones.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/milestones/:number'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.milestones.get(owner, repo, number)
+app.endpoints.githubApp.repos.milestones.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/issues/:issue_number/timeline'
@@ -447,31 +435,19 @@ app.endpoints.githubApp.codesOfConduct.get()
 * API URL: '/codes_of_conduct/:key'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.codesOfConduct.get(key)
+app.endpoints.githubApp.codesOfConduct.get()
 ```
 ---
 * API URL: '/repos/:owner/:repo'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.get(owner, repo)
-```
----
-* API URL: '/repos/:owner/:repo'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.get(owner, repo)
-```
----
-* API URL: '/repos/:owner/:repo'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.get(owner, repo)
+app.endpoints.githubApp.repos.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/:archive_format/:ref'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.get(owner, repo, archiveFormat, ref)
+app.endpoints.githubApp.repos.get(owner, repo, archiveFormat)
 ```
 ---
 * API URL: '/repos/:owner/:repo/community/code_of_conduct'
@@ -495,7 +471,7 @@ app.endpoints.githubApp.gitignore.templates.get()
 * API URL: '/gitignore/templates/:name'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.gitignore.templates.get(name)
+app.endpoints.githubApp.gitignore.templates.get()
 ```
 ---
 * API URL: '/licenses'
@@ -507,7 +483,7 @@ app.endpoints.githubApp.licenses.get()
 * API URL: '/licenses/:license'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.licenses.get(license)
+app.endpoints.githubApp.licenses.get()
 ```
 ---
 * API URL: '/repos/:owner/:repo/license'
@@ -555,61 +531,25 @@ app.endpoints.githubApp.orgs.get(org)
 * API URL: '/orgs/:org/members'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.members.get(org)
+app.endpoints.githubApp.orgs.members.get()
 ```
 ---
 * API URL: '/orgs/:org/members/:username'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.members.get(org, username)
-```
----
-* API URL: '/orgs/:org/members'
-* HTTP Method: 'GET'
-```javascript
 app.endpoints.githubApp.orgs.members.get(org)
 ```
 ---
-* API URL: '/orgs/:org/members/:username'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.orgs.members.get(org, username)
-```
----
-* API URL: '/orgs/:org/public_members'
+* API URL: '/orgs/:org/public_members/:username'
 * HTTP Method: 'GET'
 ```javascript
 app.endpoints.githubApp.orgs.publicMembers.get(org)
 ```
 ---
-* API URL: '/orgs/:org/public_members/:username'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.orgs.publicMembers.get(org, username)
-```
----
 * API URL: '/orgs/:org/public_members'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.publicMembers.get(org)
-```
----
-* API URL: '/orgs/:org/public_members/:username'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.orgs.publicMembers.get(org, username)
-```
----
-* API URL: '/orgs/:org/memberships/:username'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.orgs.memberships.get(org, username)
-```
----
-* API URL: '/orgs/:org/memberships/:username'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.orgs.memberships.get(org, username)
+app.endpoints.githubApp.orgs.publicMembers.get()
 ```
 ---
 * API URL: '/orgs/:org/invitations'
@@ -618,10 +558,10 @@ app.endpoints.githubApp.orgs.memberships.get(org, username)
 app.endpoints.githubApp.orgs.invitations.get(org)
 ```
 ---
-* API URL: '/orgs/:org/invitations'
+* API URL: '/orgs/:org/memberships/:username'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.invitations.get(org)
+app.endpoints.githubApp.orgs.memberships.get(org, username)
 ```
 ---
 * API URL: '/user/memberships/orgs'
@@ -633,7 +573,7 @@ app.endpoints.githubApp.user.memberships.orgs.get()
 * API URL: '/user/memberships/orgs/:org'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.user.memberships.orgs.get(org)
+app.endpoints.githubApp.user.memberships.orgs.get()
 ```
 ---
 * API URL: '/orgs/:org/outside_collaborators'
@@ -663,13 +603,13 @@ app.endpoints.githubApp.teams.teams.get(id)
 * API URL: '/teams/:id/members'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.teams.members.get(id)
+app.endpoints.githubApp.teams.members.get()
 ```
 ---
 * API URL: '/teams/:id/members/:username'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.teams.members.get(id, username)
+app.endpoints.githubApp.teams.members.get(id)
 ```
 ---
 * API URL: '/teams/:id/memberships/:username'
@@ -687,13 +627,13 @@ app.endpoints.githubApp.teams.invitations.get(id)
 * API URL: '/teams/:id/repos'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.teams.repos.get(id)
+app.endpoints.githubApp.teams.repos.get()
 ```
 ---
 * API URL: '/teams/:id/repos/:owner/:repo'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.teams.repos.get(id, owner, repo)
+app.endpoints.githubApp.teams.repos.get(id, owner)
 ```
 ---
 * API URL: '/user/teams'
@@ -705,25 +645,25 @@ app.endpoints.githubApp.user.teams.get()
 * API URL: '/orgs/:org/hooks'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.hooks.get(org)
+app.endpoints.githubApp.orgs.hooks.get()
 ```
 ---
 * API URL: '/orgs/:org/hooks/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.hooks.get(org, id)
+app.endpoints.githubApp.orgs.hooks.get(org)
 ```
 ---
 * API URL: '/orgs/:org/blocks'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.blocks.get(org)
+app.endpoints.githubApp.orgs.blocks.get()
 ```
 ---
 * API URL: '/orgs/:org/blocks/:username'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.orgs.blocks.get(org, username)
+app.endpoints.githubApp.orgs.blocks.get(org)
 ```
 ---
 * API URL: '/repos/:owner/:repo/projects'
@@ -753,7 +693,7 @@ app.endpoints.githubApp.projects.columns.cards.get(columnId)
 * API URL: '/projects/columns/cards/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.projects.columns.cards.get(id)
+app.endpoints.githubApp.projects.columns.cards.byId.get(id)
 ```
 ---
 * API URL: '/projects/:project_id/columns'
@@ -765,19 +705,19 @@ app.endpoints.githubApp.projects.columns.get(projectId)
 * API URL: '/projects/columns/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.projects.columns.get(id)
+app.endpoints.githubApp.projects.columns.byId.get(id)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pulls.get(owner, repo)
+app.endpoints.githubApp.repos.pulls.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls/:number'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pulls.get(owner, repo, number)
+app.endpoints.githubApp.repos.pulls.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls/:number/commits'
@@ -801,13 +741,13 @@ app.endpoints.githubApp.repos.pulls.merge.get(owner, repo, number)
 * API URL: '/repos/:owner/:repo/pulls/:number/reviews'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pulls.reviews.get(owner, repo, number)
+app.endpoints.githubApp.repos.pulls.reviews.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls/:number/reviews/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pulls.reviews.get(owner, repo, number, id)
+app.endpoints.githubApp.repos.pulls.reviews.get(owner, repo, number)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls/:number/reviews/:id/comments'
@@ -819,19 +759,19 @@ app.endpoints.githubApp.repos.pulls.reviews.comments.get(owner, repo, number, id
 * API URL: '/repos/:owner/:repo/pulls/:number/comments'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pulls.comments.get(owner, repo, number)
+app.endpoints.githubApp.repos.pulls.comments.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls/comments'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pulls.comments.get(owner, repo)
+app.endpoints.githubApp.repos.pulls.comments.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls/comments/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pulls.comments.get(owner, repo, id)
+app.endpoints.githubApp.repos.pulls.comments.byId.get(owner, repo, id)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pulls/:number/requested_reviewers'
@@ -921,13 +861,13 @@ app.endpoints.githubApp.repos.tags.get(owner, repo)
 * API URL: '/repos/:owner/:repo/branches'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.branches.get(owner, repo)
+app.endpoints.githubApp.repos.branches.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/branches/:branch'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.branches.get(owner, repo, branch)
+app.endpoints.githubApp.repos.branches.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/branches/:branch/protection'
@@ -981,13 +921,13 @@ app.endpoints.githubApp.repos.branches.protection.restrictions.users.get(owner, 
 * API URL: '/repos/:owner/:repo/collaborators'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.collaborators.get(owner, repo)
+app.endpoints.githubApp.repos.collaborators.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/collaborators/:username'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.collaborators.get(owner, repo, username)
+app.endpoints.githubApp.repos.collaborators.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/collaborators/:username/permission'
@@ -999,13 +939,13 @@ app.endpoints.githubApp.repos.collaborators.permission.get(owner, repo, username
 * API URL: '/repos/:owner/:repo/comments'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.comments.get(owner, repo)
+app.endpoints.githubApp.repos.comments.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/comments/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.comments.get(owner, repo, id)
+app.endpoints.githubApp.repos.comments.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/commits/:ref/comments'
@@ -1023,25 +963,13 @@ app.endpoints.githubApp.repos.community.profile.get(owner, name)
 * API URL: '/repos/:owner/:repo/commits'
 * HTTP Method: 'GET'
 ```javascript
+app.endpoints.githubApp.repos.commits.get(owner)
+```
+---
+* API URL: '/repos/:owner/:repo/commits/:sha'
+* HTTP Method: 'GET'
+```javascript
 app.endpoints.githubApp.repos.commits.get(owner, repo)
-```
----
-* API URL: '/repos/:owner/:repo/commits/:sha'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.commits.get(owner, repo, sha)
-```
----
-* API URL: '/repos/:owner/:repo/commits/:ref'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.commits.get(owner, repo, ref)
-```
----
-* API URL: '/repos/:owner/:repo/commits/:sha'
-* HTTP Method: 'GET'
-```javascript
-app.endpoints.githubApp.repos.commits.get(owner, repo, sha)
 ```
 ---
 * API URL: '/repos/:owner/:repo/compare/:baseCommitSuspensivePointsHeadCommit'
@@ -1065,49 +993,49 @@ app.endpoints.githubApp.repos.contents.get(owner, repo, path)
 * API URL: '/repos/:owner/:repo/keys'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.keys.get(owner, repo)
+app.endpoints.githubApp.repos.keys.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/keys/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.keys.get(owner, repo, id)
+app.endpoints.githubApp.repos.keys.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/deployments'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.deployments.get(owner, repo)
+app.endpoints.githubApp.repos.deployments.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/deployments/:deployment_id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.deployments.get(owner, repo, deploymentId)
+app.endpoints.githubApp.repos.deployments.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/deployments/:id/statuses'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.deployments.statuses.get(owner, repo, id)
+app.endpoints.githubApp.repos.deployments.statuses.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/deployments/:id/statuses/:status_id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.deployments.statuses.get(owner, repo, id, statusId)
+app.endpoints.githubApp.repos.deployments.statuses.get(owner, repo, id)
 ```
 ---
 * API URL: '/repos/:owner/:repo/downloads'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.downloads.get(owner, repo)
+app.endpoints.githubApp.repos.downloads.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/downloads/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.downloads.get(owner, repo, id)
+app.endpoints.githubApp.repos.downloads.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/forks'
@@ -1137,13 +1065,13 @@ app.endpoints.githubApp.repos.pages.get(owner, repo)
 * API URL: '/repos/:owner/:repo/pages/builds'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pages.builds.get(owner, repo)
+app.endpoints.githubApp.repos.pages.builds.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pages/builds/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.pages.builds.get(owner, repo, id)
+app.endpoints.githubApp.repos.pages.builds.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/pages/builds/latest'
@@ -1155,13 +1083,13 @@ app.endpoints.githubApp.repos.pages.builds.latest.get(owner, repo)
 * API URL: '/repos/:owner/:repo/releases'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.releases.get(owner, repo)
+app.endpoints.githubApp.repos.releases.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/releases/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.releases.get(owner, repo, id)
+app.endpoints.githubApp.repos.releases.get(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/releases/latest'
@@ -1185,7 +1113,7 @@ app.endpoints.githubApp.repos.releases.assets.get(owner, repo, id)
 * API URL: '/repos/:owner/:repo/releases/assets/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.releases.assets.get(owner, repo, id)
+app.endpoints.githubApp.repos.releases.assets.byId.get(owner, repo, id)
 ```
 ---
 * API URL: '/repos/:owner/:repo/stats/contributors'
@@ -1257,13 +1185,13 @@ app.endpoints.githubApp.repos.traffic.clones.get(owner, repo)
 * API URL: '/repos/:owner/:repo/hooks'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.hooks.get(owner, repo)
+app.endpoints.githubApp.repos.hooks.get(owner)
 ```
 ---
 * API URL: '/repos/:owner/:repo/hooks/:id'
 * HTTP Method: 'GET'
 ```javascript
-app.endpoints.githubApp.repos.hooks.get(owner, repo, id)
+app.endpoints.githubApp.repos.hooks.get(owner, repo)
 ```
 ---
 * API URL: '/search/repositories'
@@ -1653,13 +1581,13 @@ app.endpoints.githubApp.repos.labels.delete(owner, repo, name)
 * API URL: '/repos/:owner/:repo/issues/:number/labels/:name'
 * HTTP Method: 'DELETE'
 ```javascript
-app.endpoints.githubApp.repos.issues.labels.delete(owner, repo, number, name)
+app.endpoints.githubApp.repos.issues.labels.delete(owner, repo, number)
 ```
 ---
 * API URL: '/repos/:owner/:repo/issues/:number/labels'
 * HTTP Method: 'DELETE'
 ```javascript
-app.endpoints.githubApp.repos.issues.labels.delete(owner, repo, number)
+app.endpoints.githubApp.repos.issues.labels.delete(owner, repo)
 ```
 ---
 * API URL: '/repos/:owner/:repo/milestones/:number'
@@ -2198,10 +2126,10 @@ app.endpoints.githubApp.repos.contents.put(owner, repo, path, body)
 ---
 
 </details>
-
+    
 ## Flow Step
 
-As an alternative option to using scripts, you can make use of Flows and Flow Steps specifically created for the endpoint:
+As an alternative option to using scripts, you can make use of Flows and Flow Steps specifically created for the endpoint: 
 <details>
     <summary>Click here to see the Flow Steps</summary>
 
@@ -2248,7 +2176,7 @@ Generic flow step for full use of the entire endpoint and its services.
         <td>
             The url to which this endpoint will send the request. This is the exact service to which the http request will be made. <br>
             Possible values are: <br>
-            <i><strong>/events<br>/repos/{owner}/{repo}/events<br>/repos/{owner}/{repo}/issues/events<br>/repos/{owner}/{repo}/issues/{issue_number}/events<br>/repos/{owner}/{repo}/issues/events<br>/repos/{owner}/{repo}/issues/events/{id}<br>/networks/{owner}/{repo}/events<br>/orgs/{org}/events<br>/users/{username}/received_events<br>/users/{username}/received_events<br>/users/{username}/events<br>/users/{username}/events/public<br>/users/{username}/events/orgs/{org}<br>/feeds<br>/notifications<br>/repos/{owner}/{repo}/notifications<br>/notifications/threads/{id}<br>/notifications/threads/{id}/subscription<br>/repos/{owner}/{repo}/stargazers<br>/users/{username}/starred<br>/user/starred<br>/user/starred/{owner}/{repo}<br>/repos/{owner}/{repo}/subscribers<br>/users/{username}/subscriptions<br>/user/subscriptions<br>/repos/{owner}/{repo}/subscription<br>/users/{username}/gists<br>/gists<br>/gists/{id}<br>/gists/{id}/{sha}<br>/gists/public<br>/gists/starred<br>/gists/{id}/commits<br>/gists/{id}/star<br>/gists/{id}/forks<br>/repos/{owner}/{repo}/git/blobs/{sha}<br>/repos/{owner}/{repo}/git/commits/{sha}<br>/repos/{owner}/{repo}/git/refs/{ref}<br>/repos/{owner}/{repo}/git/refs<br>/repos/{owner}/{repo}/git/tags/{sha}<br>/repos/{owner}/{repo}/git/trees/{sha}<br>/apps/{app_slug}<br>/app<br>/app/installations<br>/app/installations/{installation_id}<br>/user/installations<br>/installation/repositories<br>/user/installations/{installation_id}/repositories<br>/marketplace_listing/plans<br>/marketplace_listing/plans/{id}/accounts<br>/marketplace_listing/accounts/{id}<br>/user/marketplace_purchases<br>/issues<br>/user/issues<br>/orgs/{org}/issues<br>/repos/{owner}/{repo}/issues<br>/repos/{owner}/{repo}/issues/{number}<br>/repos/{owner}/{repo}/assignees<br>/repos/{owner}/{repo}/assignees/{assignee}<br>/repos/{owner}/{repo}/issues/{number}/comments<br>/repos/{owner}/{repo}/issues/comments<br>/repos/{owner}/{repo}/labels<br>/repos/{owner}/{repo}/labels/{name}<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/repos/{owner}/{repo}/milestones/{number}/labels<br>/repos/{owner}/{repo}/milestones<br>/repos/{owner}/{repo}/milestones/{number}<br>/repos/{owner}/{repo}/issues/{issue_number}/timeline<br>/codes_of_conduct<br>/codes_of_conduct/{key}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}/{archive_format}/{ref}<br>/repos/{owner}/{repo}/community/code_of_conduct<br>/emojis<br>/gitignore/templates<br>/gitignore/templates/{name}<br>/licenses<br>/licenses/{license}<br>/repos/{owner}/{repo}/license<br>/meta<br>/rate_limit<br>/user/orgs<br>/organizations<br>/users/{username}/orgs<br>/orgs/{org}<br>/orgs/{org}/members<br>/orgs/{org}/members/{username}<br>/orgs/{org}/members<br>/orgs/{org}/members/{username}<br>/orgs/{org}/public_members<br>/orgs/{org}/public_members/{username}<br>/orgs/{org}/public_members<br>/orgs/{org}/public_members/{username}<br>/orgs/{org}/memberships/{username}<br>/orgs/{org}/memberships/{username}<br>/orgs/{org}/invitations<br>/orgs/{org}/invitations<br>/user/memberships/orgs<br>/user/memberships/orgs/{org}<br>/orgs/{org}/outside_collaborators<br>/orgs/{org}/teams<br>/teams/{id}<br>/teams/{id}/teams<br>/teams/{id}/members<br>/teams/{id}/members/{username}<br>/teams/{id}/memberships/{username}<br>/teams/{id}/invitations<br>/teams/{id}/repos<br>/teams/{id}/repos/{owner}/{repo}<br>/user/teams<br>/orgs/{org}/hooks<br>/orgs/{org}/hooks/{id}<br>/orgs/{org}/blocks<br>/orgs/{org}/blocks/{username}<br>/repos/{owner}/{repo}/projects<br>/orgs/{org}/projects<br>/projects/{id}<br>/projects/columns/{column_id}/cards<br>/projects/columns/cards/{id}<br>/projects/{project_id}/columns<br>/projects/columns/{id}<br>/repos/{owner}/{repo}/pulls<br>/repos/{owner}/{repo}/pulls/{number}<br>/repos/{owner}/{repo}/pulls/{number}/commits<br>/repos/{owner}/{repo}/pulls/{number}/files<br>/repos/{owner}/{repo}/pulls/{number}/merge<br>/repos/{owner}/{repo}/pulls/{number}/reviews<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/comments<br>/repos/{owner}/{repo}/pulls/{number}/comments<br>/repos/{owner}/{repo}/pulls/comments<br>/repos/{owner}/{repo}/pulls/comments/{id}<br>/repos/{owner}/{repo}/pulls/{number}/requested_reviewers<br>/repos/{owner}/{repo}/comments/{id}/reactions<br>/repos/{owner}/{repo}/issues/{number}/reactions<br>/repos/{owner}/{repo}/issues/comments/{id}/reactions<br>/repos/{owner}/{repo}/pulls/comments/{id}/reactions<br>/user/repos<br>/users/{username}/repos<br>/orgs/{org}/repos<br>/repositories<br>/repos/{owner}/{repo}/topics<br>/repos/{owner}/{repo}/contributors<br>/repos/{owner}/{repo}/languages<br>/repos/{owner}/{repo}/teams<br>/repos/{owner}/{repo}/tags<br>/repos/{owner}/{repo}/branches<br>/repos/{owner}/{repo}/branches/{branch}<br>/repos/{owner}/{repo}/branches/{branch}/protection<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews<br>/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/collaborators<br>/repos/{owner}/{repo}/collaborators/{username}<br>/repos/{owner}/{repo}/collaborators/{username}/permission<br>/repos/{owner}/{repo}/comments<br>/repos/{owner}/{repo}/comments/{id}<br>/repos/{owner}/{repo}/commits/{ref}/comments<br>/repos/{owner}/{name}/community/profile<br>/repos/{owner}/{repo}/commits<br>/repos/{owner}/{repo}/commits/{sha}<br>/repos/{owner}/{repo}/commits/{ref}<br>/repos/{owner}/{repo}/commits/{sha}<br>/repos/{owner}/{repo}/compare/{baseCommitSuspensivePointsHeadCommit}<br>/repos/{owner}/{repo}/readme<br>/repos/{owner}/{repo}/contents/{path}<br>/repos/{owner}/{repo}/keys<br>/repos/{owner}/{repo}/keys/{id}<br>/repos/{owner}/{repo}/deployments<br>/repos/{owner}/{repo}/deployments/{deployment_id}<br>/repos/{owner}/{repo}/deployments/{id}/statuses<br>/repos/{owner}/{repo}/deployments/{id}/statuses/{status_id}<br>/repos/{owner}/{repo}/downloads<br>/repos/{owner}/{repo}/downloads/{id}<br>/repos/{owner}/{repo}/forks<br>/repos/{owner}/{repo}/invitations<br>/user/repository_invitations<br>/repos/{owner}/{repo}/pages<br>/repos/{owner}/{repo}/pages/builds<br>/repos/{owner}/{repo}/pages/builds/{id}<br>/repos/{owner}/{repo}/pages/builds/latest<br>/repos/{owner}/{repo}/releases<br>/repos/{owner}/{repo}/releases/{id}<br>/repos/{owner}/{repo}/releases/latest<br>/repos/{owner}/{repo}/releases/tags/{tag}<br>/repos/{owner}/{repo}/releases/{id}/assets<br>/repos/{owner}/{repo}/releases/assets/{id}<br>/repos/{owner}/{repo}/stats/contributors<br>/repos/{owner}/{repo}/stats/commit_activity<br>/repos/{owner}/{repo}/stats/code_frequency<br>/repos/{owner}/{repo}/stats/participation<br>/repos/{owner}/{repo}/stats/punch_card<br>/repos/{owner}/{repo}/commits/{ref}/statuses<br>/repos/{owner}/{repo}/commits/{ref}/status<br>/repos/{owner}/{repo}/traffic/popular/referrers<br>/repos/{owner}/{repo}/traffic/popular/paths<br>/repos/{owner}/{repo}/traffic/views<br>/repos/{owner}/{repo}/traffic/clones<br>/repos/{owner}/{repo}/hooks<br>/repos/{owner}/{repo}/hooks/{id}<br>/search/repositories<br>/search/commits<br>/search/code<br>/search/issues<br>/search/users<br>/gists<br>/gists/{id}/forks<br>/repos/{owner}/{repo}/git/blobs<br>/repos/{owner}/{repo}/git/commits<br>/repos/{owner}/{repo}/git/refs<br>/repos/{owner}/{repo}/git/tags<br>/repos/{owner}/{repo}/git/trees<br>/installations/{installation_id}/access_tokens<br>/repos/{owner}/{repo}/issues<br>/repos/{owner}/{repo}/issues/{number}/assignees<br>/repos/{owner}/{repo}/issues/{number}/comments<br>/repos/{owner}/{repo}/labels<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/repos/{owner}/{repo}/milestones<br>/markdown<br>/markdown/raw<br>/orgs/{org}/teams<br>/orgs/{org}/hooks<br>/orgs/{org}/hooks/{id}/pings<br>/repos/{owner}/{repo}/projects<br>/orgs/{org}/projects<br>/projects/columns/{column_id}/cards<br>/projects/columns/cards/{id}/moves<br>/projects/{project_id}/columns<br>/projects/columns/{id}/moves<br>/repos/{owner}/{repo}/pulls<br>/repos/{owner}/{repo}/pulls/{number}/reviews<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/events<br>/repos/{owner}/{repo}/pulls/{number}/comments<br>/repos/{owner}/{repo}/pulls/{number}/requested_reviewers<br>/repos/{owner}/{repo}/comments/{id}/reactions<br>/repos/{owner}/{repo}/issues/{number}/reactions<br>/repos/{owner}/{repo}/issues/comments/{id}/reactions<br>/repos/{owner}/{repo}/pulls/comments/{id}/reactions<br>/user/repos<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/commits/{sha}/comments<br>/repos/{owner}/{repo}/keys<br>/repos/{owner}/{repo}/merges<br>/repos/{owner}/{repo}/pages/builds<br>/repos/{owner}/{repo}/releases<br>/repos/{owner}/{repo}/statuses/{sha}<br>/repos/{owner}/{repo}/hooks<br>/repos/{owner}/{repo}/hooks/{id}/tests<br>/repos/{owner}/{repo}/hooks/{id}/pings<br>/notifications/threads/{id}/subscription<br>/user/starred/{owner}/{repo}<br>/repos/{owner}/{repo}/subscription<br>/gists/{id}/star<br>/gists/{id}<br>/repos/{owner}/{repo}/git/refs/{ref}<br>/user/installations/{installation_id}/repositories/{repository_id}<br>/repos/{owner}/{repo}/issues/{number}/lock<br>/repos/{owner}/{repo}/issues/{number}/assignees<br>/repos/{owner}/{repo}/issues/comments/{id}<br>/repos/{owner}/{repo}/labels/{name}<br>/repos/{owner}/{repo}/issues/{number}/labels/{name}<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/repos/{owner}/{repo}/milestones/{number}<br>/orgs/{org}/members/{username}<br>/orgs/{org}/public_members/{username}<br>/orgs/{org}/memberships/{username}<br>/orgs/{org}/outside_collaborators/{username}<br>/teams/{id}<br>/teams/{id}/memberships/{username}<br>/teams/{id}/repos/{owner}/{repo}<br>/orgs/{org}/hooks/{id}<br>/orgs/{org}/blocks/{username}<br>/projects/{id}<br>/projects/columns/cards/{id}<br>/projects/columns/{id}<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}<br>/repos/{owner}/{repo}/pulls/comments/{id}<br>/repos/{owner}/{repo}/pulls/{number}/requested_reviewers<br>/reactions/{id}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}/branches/{branch}/protection<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews<br>/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/collaborators/{username}<br>/repos/{owner}/{repo}/comments/{id}<br>/repos/{owner}/{repo}/contents/{path}<br>/repos/{owner}/{repo}/keys/{id}<br>/repos/{owner}/{repo}/deployments<br>/repos/{owner}/{repo}/deployments/{id}/statuses<br>/repos/{owner}/{repo}/downloads/{id}<br>/repos/{owner}/{repo}/forks<br>/repos/{owner}/{repo}/invitations/{invitation_id}<br>/user/repository_invitations/{invitation_id}<br>/repos/{owner}/{repo}/releases/{id}<br>/repos/{owner}/{repo}/releases/assets/{id}<br>/repos/{owner}/{repo}/hooks/{id}<br>/notifications/threads/{id}<br>/gists/{id}<br>/repos/{owner}/{repo}/git/refs/{ref}<br>/repos/{owner}/{repo}/issues/{number}<br>/repos/{owner}/{repo}/issues/comments/{id}<br>/repos/{owner}/{repo}/labels/{name}<br>/repos/{owner}/{repo}/milestones/{number}<br>/orgs/{org}<br>/user/memberships/orgs/{org}<br>/teams/{id}<br>/orgs/{org}/hooks/{id}<br>/projects/{id}<br>/projects/columns/cards/{id}<br>/projects/columns/{id}<br>/repos/{owner}/{repo}/pulls/{number}<br>/repos/{owner}/{repo}/pulls/comments/{id}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews<br>/repos/{owner}/{repo}/comments/{id}<br>/repos/{owner}/{repo}/invitations/{invitation_id}<br>/user/repository_invitations/{invitation_id}<br>/repos/{owner}/{repo}/releases/{id}<br>/repos/{owner}/{repo}/releases/assets/{id}<br>/repos/{owner}/{repo}/hooks/{id}<br>/notifications<br>/repos/{owner}/{repo}/notifications<br>/notifications/threads/{id}/subscription<br>/user/starred/{owner}/{repo}<br>/repos/{owner}/{repo}/subscription<br>/gists/{id}/star<br>/user/installations/{installation_id}/repositories/{repository_id}<br>/repos/{owner}/{repo}/issues/{number}/lock<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/orgs/{org}/public_members/{username}<br>/orgs/{org}/memberships/{username}<br>/orgs/{org}/outside_collaborators/{username}<br>/teams/{id}/members/{username}<br>/teams/{id}/memberships/{username}<br>/teams/{id}/repos/{org}/{repo}<br>/orgs/{org}/blocks/{username}<br>/repos/{owner}/{repo}/pulls/{number}/merge<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/dismissals<br>/repos/{owner}/{repo}/topics<br>/repos/{owner}/{repo}/branches/{branch}/protection<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/collaborators/{username}<br>/repos/{owner}/{repo}/contents/{path}<br></strong></i>
+            <i><strong>/events<br>/repos/{owner}/{repo}/events<br>/networks/{owner}/{repo}/events<br>/orgs/{org}/events<br>/users/{username}/received_events<br>/users/{username}/events<br>/users/{username}/events/public<br>/users/{username}/events/orgs/{org}<br>/feeds<br>/notifications<br>/repos/{owner}/{repo}/notifications<br>/notifications/threads/{id}<br>/notifications/threads/{id}/subscription<br>/repos/{owner}/{repo}/stargazers<br>/users/{username}/starred<br>/user/starred<br>/user/starred/{owner}/{repo}<br>/repos/{owner}/{repo}/subscribers<br>/users/{username}/subscriptions<br>/user/subscriptions<br>/repos/{owner}/{repo}/subscription<br>/users/{username}/gists<br>/gists<br>/gists/{id}<br>/gists/{id}/{sha}<br>/gists/public<br>/gists/starred<br>/gists/{id}/commits<br>/gists/{id}/star<br>/gists/{id}/forks<br>/repos/{owner}/{repo}/git/blobs/{sha}<br>/repos/{owner}/{repo}/git/commits/{sha}<br>/repos/{owner}/{repo}/git/refs/{ref}<br>/repos/{owner}/{repo}/git/refs<br>/repos/{owner}/{repo}/git/tags/{sha}<br>/repos/{owner}/{repo}/git/trees/{sha}<br>/apps/{app_slug}<br>/app<br>/app/installations<br>/app/installations/{installation_id}<br>/user/installations<br>/installation/repositories<br>/user/installations/{installation_id}/repositories<br>/marketplace_listing/plans<br>/marketplace_listing/plans/{id}/accounts<br>/marketplace_listing/accounts/{id}<br>/user/marketplace_purchases<br>/issues<br>/user/issues<br>/orgs/{org}/issues<br>/repos/{owner}/{repo}/issues<br>/repos/{owner}/{repo}/issues/{number}<br>/repos/{owner}/{repo}/assignees<br>/repos/{owner}/{repo}/assignees/{assignee}<br>/repos/{owner}/{repo}/issues/{number}/comments<br>/repos/{owner}/{repo}/issues/comments<br>/repos/{owner}/{repo}/issues/{issue_number}/events<br>/repos/{owner}/{repo}/issues/events<br>/repos/{owner}/{repo}/issues/events/{id}<br>/repos/{owner}/{repo}/labels<br>/repos/{owner}/{repo}/labels/{name}<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/repos/{owner}/{repo}/milestones/{number}/labels<br>/repos/{owner}/{repo}/milestones<br>/repos/{owner}/{repo}/milestones/{number}<br>/repos/{owner}/{repo}/issues/{issue_number}/timeline<br>/codes_of_conduct<br>/codes_of_conduct/{key}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}/{archive_format}/{ref}<br>/repos/{owner}/{repo}/community/code_of_conduct<br>/emojis<br>/gitignore/templates<br>/gitignore/templates/{name}<br>/licenses<br>/licenses/{license}<br>/repos/{owner}/{repo}/license<br>/meta<br>/rate_limit<br>/user/orgs<br>/organizations<br>/users/{username}/orgs<br>/orgs/{org}<br>/orgs/{org}/members<br>/orgs/{org}/members/{username}<br>/orgs/{org}/public_members/{username}<br>/orgs/{org}/public_members<br>/orgs/{org}/invitations<br>/orgs/{org}/memberships/{username}<br>/user/memberships/orgs<br>/user/memberships/orgs/{org}<br>/orgs/{org}/outside_collaborators<br>/orgs/{org}/teams<br>/teams/{id}<br>/teams/{id}/teams<br>/teams/{id}/members<br>/teams/{id}/members/{username}<br>/teams/{id}/memberships/{username}<br>/teams/{id}/invitations<br>/teams/{id}/repos<br>/teams/{id}/repos/{owner}/{repo}<br>/user/teams<br>/orgs/{org}/hooks<br>/orgs/{org}/hooks/{id}<br>/orgs/{org}/blocks<br>/orgs/{org}/blocks/{username}<br>/repos/{owner}/{repo}/projects<br>/orgs/{org}/projects<br>/projects/{id}<br>/projects/columns/{column_id}/cards<br>/projects/columns/cards/{id}<br>/projects/{project_id}/columns<br>/projects/columns/{id}<br>/repos/{owner}/{repo}/pulls<br>/repos/{owner}/{repo}/pulls/{number}<br>/repos/{owner}/{repo}/pulls/{number}/commits<br>/repos/{owner}/{repo}/pulls/{number}/files<br>/repos/{owner}/{repo}/pulls/{number}/merge<br>/repos/{owner}/{repo}/pulls/{number}/reviews<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/comments<br>/repos/{owner}/{repo}/pulls/{number}/comments<br>/repos/{owner}/{repo}/pulls/comments<br>/repos/{owner}/{repo}/pulls/comments/{id}<br>/repos/{owner}/{repo}/pulls/{number}/requested_reviewers<br>/repos/{owner}/{repo}/comments/{id}/reactions<br>/repos/{owner}/{repo}/issues/{number}/reactions<br>/repos/{owner}/{repo}/issues/comments/{id}/reactions<br>/repos/{owner}/{repo}/pulls/comments/{id}/reactions<br>/user/repos<br>/users/{username}/repos<br>/orgs/{org}/repos<br>/repositories<br>/repos/{owner}/{repo}/topics<br>/repos/{owner}/{repo}/contributors<br>/repos/{owner}/{repo}/languages<br>/repos/{owner}/{repo}/teams<br>/repos/{owner}/{repo}/tags<br>/repos/{owner}/{repo}/branches<br>/repos/{owner}/{repo}/branches/{branch}<br>/repos/{owner}/{repo}/branches/{branch}/protection<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews<br>/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/collaborators<br>/repos/{owner}/{repo}/collaborators/{username}<br>/repos/{owner}/{repo}/collaborators/{username}/permission<br>/repos/{owner}/{repo}/comments<br>/repos/{owner}/{repo}/comments/{id}<br>/repos/{owner}/{repo}/commits/{ref}/comments<br>/repos/{owner}/{name}/community/profile<br>/repos/{owner}/{repo}/commits<br>/repos/{owner}/{repo}/commits/{sha}<br>/repos/{owner}/{repo}/compare/{baseCommitSuspensivePointsHeadCommit}<br>/repos/{owner}/{repo}/readme<br>/repos/{owner}/{repo}/contents/{path}<br>/repos/{owner}/{repo}/keys<br>/repos/{owner}/{repo}/keys/{id}<br>/repos/{owner}/{repo}/deployments<br>/repos/{owner}/{repo}/deployments/{deployment_id}<br>/repos/{owner}/{repo}/deployments/{id}/statuses<br>/repos/{owner}/{repo}/deployments/{id}/statuses/{status_id}<br>/repos/{owner}/{repo}/downloads<br>/repos/{owner}/{repo}/downloads/{id}<br>/repos/{owner}/{repo}/forks<br>/repos/{owner}/{repo}/invitations<br>/user/repository_invitations<br>/repos/{owner}/{repo}/pages<br>/repos/{owner}/{repo}/pages/builds<br>/repos/{owner}/{repo}/pages/builds/{id}<br>/repos/{owner}/{repo}/pages/builds/latest<br>/repos/{owner}/{repo}/releases<br>/repos/{owner}/{repo}/releases/{id}<br>/repos/{owner}/{repo}/releases/latest<br>/repos/{owner}/{repo}/releases/tags/{tag}<br>/repos/{owner}/{repo}/releases/{id}/assets<br>/repos/{owner}/{repo}/releases/assets/{id}<br>/repos/{owner}/{repo}/stats/contributors<br>/repos/{owner}/{repo}/stats/commit_activity<br>/repos/{owner}/{repo}/stats/code_frequency<br>/repos/{owner}/{repo}/stats/participation<br>/repos/{owner}/{repo}/stats/punch_card<br>/repos/{owner}/{repo}/commits/{ref}/statuses<br>/repos/{owner}/{repo}/commits/{ref}/status<br>/repos/{owner}/{repo}/traffic/popular/referrers<br>/repos/{owner}/{repo}/traffic/popular/paths<br>/repos/{owner}/{repo}/traffic/views<br>/repos/{owner}/{repo}/traffic/clones<br>/repos/{owner}/{repo}/hooks<br>/repos/{owner}/{repo}/hooks/{id}<br>/search/repositories<br>/search/commits<br>/search/code<br>/search/issues<br>/search/users<br>/gists<br>/gists/{id}/forks<br>/repos/{owner}/{repo}/git/blobs<br>/repos/{owner}/{repo}/git/commits<br>/repos/{owner}/{repo}/git/refs<br>/repos/{owner}/{repo}/git/tags<br>/repos/{owner}/{repo}/git/trees<br>/installations/{installation_id}/access_tokens<br>/repos/{owner}/{repo}/issues<br>/repos/{owner}/{repo}/issues/{number}/assignees<br>/repos/{owner}/{repo}/issues/{number}/comments<br>/repos/{owner}/{repo}/labels<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/repos/{owner}/{repo}/milestones<br>/markdown<br>/markdown/raw<br>/orgs/{org}/teams<br>/orgs/{org}/hooks<br>/orgs/{org}/hooks/{id}/pings<br>/repos/{owner}/{repo}/projects<br>/orgs/{org}/projects<br>/projects/columns/{column_id}/cards<br>/projects/columns/cards/{id}/moves<br>/projects/{project_id}/columns<br>/projects/columns/{id}/moves<br>/repos/{owner}/{repo}/pulls<br>/repos/{owner}/{repo}/pulls/{number}/reviews<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/events<br>/repos/{owner}/{repo}/pulls/{number}/comments<br>/repos/{owner}/{repo}/pulls/{number}/requested_reviewers<br>/repos/{owner}/{repo}/comments/{id}/reactions<br>/repos/{owner}/{repo}/issues/{number}/reactions<br>/repos/{owner}/{repo}/issues/comments/{id}/reactions<br>/repos/{owner}/{repo}/pulls/comments/{id}/reactions<br>/user/repos<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/commits/{sha}/comments<br>/repos/{owner}/{repo}/keys<br>/repos/{owner}/{repo}/merges<br>/repos/{owner}/{repo}/pages/builds<br>/repos/{owner}/{repo}/releases<br>/repos/{owner}/{repo}/statuses/{sha}<br>/repos/{owner}/{repo}/hooks<br>/repos/{owner}/{repo}/hooks/{id}/tests<br>/repos/{owner}/{repo}/hooks/{id}/pings<br>/notifications/threads/{id}/subscription<br>/user/starred/{owner}/{repo}<br>/repos/{owner}/{repo}/subscription<br>/gists/{id}/star<br>/gists/{id}<br>/repos/{owner}/{repo}/git/refs/{ref}<br>/user/installations/{installation_id}/repositories/{repository_id}<br>/repos/{owner}/{repo}/issues/{number}/lock<br>/repos/{owner}/{repo}/issues/{number}/assignees<br>/repos/{owner}/{repo}/issues/comments/{id}<br>/repos/{owner}/{repo}/labels/{name}<br>/repos/{owner}/{repo}/issues/{number}/labels/{name}<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/repos/{owner}/{repo}/milestones/{number}<br>/orgs/{org}/members/{username}<br>/orgs/{org}/public_members/{username}<br>/orgs/{org}/memberships/{username}<br>/orgs/{org}/outside_collaborators/{username}<br>/teams/{id}<br>/teams/{id}/memberships/{username}<br>/teams/{id}/repos/{owner}/{repo}<br>/orgs/{org}/hooks/{id}<br>/orgs/{org}/blocks/{username}<br>/projects/{id}<br>/projects/columns/cards/{id}<br>/projects/columns/{id}<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}<br>/repos/{owner}/{repo}/pulls/comments/{id}<br>/repos/{owner}/{repo}/pulls/{number}/requested_reviewers<br>/reactions/{id}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}/branches/{branch}/protection<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews<br>/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/collaborators/{username}<br>/repos/{owner}/{repo}/comments/{id}<br>/repos/{owner}/{repo}/contents/{path}<br>/repos/{owner}/{repo}/keys/{id}<br>/repos/{owner}/{repo}/deployments<br>/repos/{owner}/{repo}/deployments/{id}/statuses<br>/repos/{owner}/{repo}/downloads/{id}<br>/repos/{owner}/{repo}/forks<br>/repos/{owner}/{repo}/invitations/{invitation_id}<br>/user/repository_invitations/{invitation_id}<br>/repos/{owner}/{repo}/releases/{id}<br>/repos/{owner}/{repo}/releases/assets/{id}<br>/repos/{owner}/{repo}/hooks/{id}<br>/notifications/threads/{id}<br>/gists/{id}<br>/repos/{owner}/{repo}/git/refs/{ref}<br>/repos/{owner}/{repo}/issues/{number}<br>/repos/{owner}/{repo}/issues/comments/{id}<br>/repos/{owner}/{repo}/labels/{name}<br>/repos/{owner}/{repo}/milestones/{number}<br>/orgs/{org}<br>/user/memberships/orgs/{org}<br>/teams/{id}<br>/orgs/{org}/hooks/{id}<br>/projects/{id}<br>/projects/columns/cards/{id}<br>/projects/columns/{id}<br>/repos/{owner}/{repo}/pulls/{number}<br>/repos/{owner}/{repo}/pulls/comments/{id}<br>/repos/{owner}/{repo}<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews<br>/repos/{owner}/{repo}/comments/{id}<br>/repos/{owner}/{repo}/invitations/{invitation_id}<br>/user/repository_invitations/{invitation_id}<br>/repos/{owner}/{repo}/releases/{id}<br>/repos/{owner}/{repo}/releases/assets/{id}<br>/repos/{owner}/{repo}/hooks/{id}<br>/notifications<br>/repos/{owner}/{repo}/notifications<br>/notifications/threads/{id}/subscription<br>/user/starred/{owner}/{repo}<br>/repos/{owner}/{repo}/subscription<br>/gists/{id}/star<br>/user/installations/{installation_id}/repositories/{repository_id}<br>/repos/{owner}/{repo}/issues/{number}/lock<br>/repos/{owner}/{repo}/issues/{number}/labels<br>/orgs/{org}/public_members/{username}<br>/orgs/{org}/memberships/{username}<br>/orgs/{org}/outside_collaborators/{username}<br>/teams/{id}/members/{username}<br>/teams/{id}/memberships/{username}<br>/teams/{id}/repos/{org}/{repo}<br>/orgs/{org}/blocks/{username}<br>/repos/{owner}/{repo}/pulls/{number}/merge<br>/repos/{owner}/{repo}/pulls/{number}/reviews/{id}/dismissals<br>/repos/{owner}/{repo}/topics<br>/repos/{owner}/{repo}/branches/{branch}/protection<br>/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams<br>/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users<br>/repos/{owner}/{repo}/collaborators/{username}<br>/repos/{owner}/{repo}/contents/{path}<br></strong></i>
         </td>
     </tr>
     <tr>
@@ -2280,6 +2208,94 @@ Generic flow step for full use of the entire endpoint and its services.
         <td>
             A payload of data can be sent to the server in the body of the request.
         </td>
+    </tr>
+    <tr>
+        <td>Event</td>
+        <td>dropDown</td>
+        <td>no</td>
+        <td> - </td>
+        <td>Always</td>
+        <td>
+            Used to define event after the call. <br>
+            Possible values are: <br>
+            File Downloaded, Callback
+        </td>
+    </tr>
+    <tr>
+        <td>Callback data</td>
+        <td>textarea</td>
+        <td>no</td>
+        <td> - </td>
+        <td> Event is Callback </td>
+        <td>
+            This is an object you can send that you will get back when the function is processed.
+        </td>
+    </tr>
+    <tr>
+        <td>Callbacks</td>
+        <td>Script</td>
+        <td>no</td>
+        <td> - </td>
+        <td> Event is Callback </td>
+        <td>
+            This is a map where you can listen for different function
+        </td>
+    </tr>
+    <tr>
+        <td>Override Settings</td>
+        <td>boolean</td>
+        <td>no</td>
+        <td> false </td>
+        <td>Always</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Follow Redirect</td>
+        <td>boolean</td>
+        <td>no</td>
+        <td> false </td>
+        <td> overrideSettings </td>
+        <td>Indicates that the resource has to be downloaded into a file instead of returning it in the response.</td>
+    </tr>
+    <tr>
+        <td>Download</td>
+        <td>boolean</td>
+        <td>no</td>
+        <td> false </td>
+        <td> overrideSettings </td>
+        <td>If true the method won't return until the file has been downloaded, and it will return all the information of the file.</td>
+    </tr>
+    <tr>
+        <td>File name</td>
+        <td>text</td>
+        <td>no</td>
+        <td></td>
+        <td> overrideSettings </td>
+        <td>If provided, the file will be stored with this name. If empty the file name will be calculated from the URL.</td>
+    </tr>
+    <tr>
+        <td>Full response</td>
+        <td> boolean </td>
+        <td>no</td>
+        <td> false </td>
+        <td> overrideSettings </td>
+        <td>Include extended information about response</td>
+    </tr>
+    <tr>
+        <td>Connection Timeout</td>
+        <td> number </td>
+        <td>no</td>
+        <td> 5000 </td>
+        <td> overrideSettings </td>
+        <td>Connect timeout interval, in milliseconds (0 = infinity).</td>
+    </tr>
+    <tr>
+        <td>Read Timeout</td>
+        <td> number </td>
+        <td>no</td>
+        <td> 60000 </td>
+        <td> overrideSettings </td>
+        <td>Read timeout interval, in milliseconds (0 = infinity).</td>
     </tr>
     </tbody>
 </table>
@@ -2320,54 +2336,14 @@ For more information about how shortcuts or flow steps works, and how they are g
 
 
 
-### List Issues
+### Custom Flow Steps Name
 
-This flow step will send a request to the endpoint to obtain all user issues.
+Description of Custom Flow Steps
 
-<h3>Outputs</h3>
+*MANUALLY ADD THE DOCUMENTATION OF THESE FLOW STEPS HERE...*
 
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>response</td>
-        <td>object</td>
-        <td>
-            Object resulting from the response to the endpoint call.
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-### List Repositories for the authenticated user
-
-This flow step will send a request to githubApp to get all the repositories that the authenticated user has explicit permission to access.
-
-<h3>Outputs</h3>
-
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>response</td>
-        <td>object</td>
-        <td>
-            Object resulting from the response to the endpoint call.
-        </td>
-    </tr>
-    </tbody>
-</table>
 
 </details>
+
+## Additional Helpers
+*MANUALLY ADD THE DOCUMENTATION OF THESE HELPERS HERE...*

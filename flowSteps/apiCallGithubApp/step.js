@@ -8,8 +8,6 @@
  * {Array[string]} headers, This is used to config headers.
  * {Array[string]} params, This is used to config params.
  * {string} body, This is used to send body request.
- * {string} callbackData, This is used to send callback data.
- * {text} callbacks, This is used to send callbacks.
  * {boolean} followRedirects, This is used to config follow redirects.
  * {boolean} download, This is used to config download.
  * {boolean} fullResponse, This is used to config full response.
@@ -22,6 +20,7 @@ step.apiCallGithubApp = function (inputs) {
 		headers: inputs.headers || [],
 		params: inputs.params || [],
 		body: inputs.body || {},
+		followRedirects: inputs.followRedirects || false,
 		download: inputs.download || false,
 		fileName: inputs.fileName || "",
 		fullResponse: inputs.fullResponse || false,
@@ -53,7 +52,7 @@ step.apiCallGithubApp = function (inputs) {
 		readTimeout: inputsLogic.readTimeout
 	}
 
-	switch (inputs.method.toLowerCase()) {
+	switch (inputsLogic.method.toLowerCase()) {
 		case 'get':
 			return endpoint._get(options);
 		case 'post':
@@ -74,7 +73,7 @@ step.apiCallGithubApp = function (inputs) {
 			return endpoint._trace(options);
 	}
 
-
+	
 
 	return null;
 };
@@ -98,6 +97,7 @@ var parse = function (url, pathVariables){
 
 	return url;
 }
+
 var isObject = function (obj) {
 	return !!obj && stringType(obj) === '[object Object]'
 };

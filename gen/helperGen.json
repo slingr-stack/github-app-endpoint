@@ -20,13 +20,6 @@
       "prefix": "",
       "suffix": "",
       "method": "GET",
-      "url": "/repos/:owner/:repo/issues/events",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
       "url": "/networks/:owner/:repo/events",
       "acceptsCallbacks": false
     },
@@ -35,13 +28,6 @@
       "suffix": "",
       "method": "GET",
       "url": "/orgs/:org/events",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
-      "url": "/users/:username/received_events",
       "acceptsCallbacks": false
     },
     {
@@ -410,7 +396,7 @@
     },
     {
       "prefix": "",
-      "suffix": "",
+      "suffix": "byIssue",
       "method": "GET",
       "url": "/repos/:owner/:repo/issues/:issue_number/events",
       "acceptsCallbacks": false
@@ -545,13 +531,6 @@
       "prefix": "",
       "suffix": "",
       "method": "GET",
-      "url": "/repos/:owner/:repo",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
       "url": "/repos/:owner/:repo/license",
       "acceptsCallbacks": false
     },
@@ -615,21 +594,7 @@
       "prefix": "",
       "suffix": "",
       "method": "GET",
-      "url": "/orgs/:org/public_members",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
       "url": "/orgs/:org/public_members/:username",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
-      "url": "/orgs/:org/memberships/:username",
       "acceptsCallbacks": false
     },
     {
@@ -643,20 +608,6 @@
       "prefix": "",
       "suffix": "",
       "method": "GET",
-      "url": "/orgs/:org/members",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
-      "url": "/orgs/:org/members/:username",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
       "url": "/orgs/:org/public_members",
       "acceptsCallbacks": false
     },
@@ -664,21 +615,7 @@
       "prefix": "",
       "suffix": "",
       "method": "GET",
-      "url": "/orgs/:org/public_members/:username",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
       "url": "/orgs/:org/memberships/:username",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
-      "url": "/orgs/:org/invitations",
       "acceptsCallbacks": false
     },
     {
@@ -830,7 +767,7 @@
     },
     {
       "prefix": "",
-      "suffix": "",
+      "suffix": "byId",
       "method": "GET",
       "url": "/projects/columns/cards/:id",
       "acceptsCallbacks": false
@@ -844,7 +781,7 @@
     },
     {
       "prefix": "",
-      "suffix": "",
+      "suffix": "byId",
       "method": "GET",
       "url": "/projects/columns/:id",
       "acceptsCallbacks": false
@@ -921,7 +858,7 @@
     },
     {
       "prefix": "",
-      "suffix": "",
+      "suffix": "byId",
       "method": "GET",
       "url": "/repos/:owner/:repo/pulls/comments/:id",
       "acceptsCallbacks": false
@@ -987,13 +924,6 @@
       "suffix": "",
       "method": "GET",
       "url": "/repositories",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
-      "url": "/repos/:owner/:repo",
       "acceptsCallbacks": false
     },
     {
@@ -1155,20 +1085,6 @@
       "suffix": "",
       "method": "GET",
       "url": "/repos/:owner/:repo/commits",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
-      "url": "/repos/:owner/:repo/commits/:sha",
-      "acceptsCallbacks": false
-    },
-    {
-      "prefix": "",
-      "suffix": "",
-      "method": "GET",
-      "url": "/repos/:owner/:repo/commits/:ref",
       "acceptsCallbacks": false
     },
     {
@@ -1348,7 +1264,7 @@
     },
     {
       "prefix": "",
-      "suffix": "",
+      "suffix": "byId",
       "method": "GET",
       "url": "/repos/:owner/:repo/releases/assets/:id",
       "acceptsCallbacks": false
