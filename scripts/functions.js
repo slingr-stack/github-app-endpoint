@@ -552,7 +552,7 @@ endpoint.user.starred.get = function(owner, repo, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -629,7 +629,7 @@ endpoint.gists.get = function(id, sha, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -727,7 +727,7 @@ endpoint.repos.git.refs.get = function(owner, repo, ref, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -793,7 +793,7 @@ endpoint.app.installations.get = function(installationId, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -905,7 +905,7 @@ endpoint.repos.issues.get = function(owner, repo, number, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -931,7 +931,7 @@ endpoint.repos.assignees.get = function(owner, repo, assignee, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -957,7 +957,7 @@ endpoint.repos.issues.comments.get = function(owner, repo, number, httpOptions) 
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -994,7 +994,7 @@ endpoint.repos.issues.events.get = function(owner, repo, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1020,7 +1020,7 @@ endpoint.repos.labels.get = function(owner, repo, name, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1068,7 +1068,7 @@ endpoint.repos.milestones.get = function(owner, repo, number, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1105,7 +1105,7 @@ endpoint.codesOfConduct.get = function(key, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1131,7 +1131,7 @@ endpoint.repos.get = function(owner, repo, archiveFormat, ref, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1175,7 +1175,7 @@ endpoint.gitignore.templates.get = function(name, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1201,7 +1201,7 @@ endpoint.licenses.get = function(license, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1288,7 +1288,7 @@ endpoint.orgs.members.get = function(org, username, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1314,7 +1314,7 @@ endpoint.orgs.publicMembers.get = function(org, username, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1362,7 +1362,7 @@ endpoint.user.memberships.orgs.get = function(org, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1432,7 +1432,7 @@ endpoint.teams.members.get = function(id, username, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1480,7 +1480,7 @@ endpoint.teams.repos.get = function(id, owner, repo, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1513,7 +1513,7 @@ endpoint.orgs.hooks.get = function(org, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1539,7 +1539,7 @@ endpoint.orgs.blocks.get = function(org, username, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1642,7 +1642,7 @@ endpoint.repos.pulls.get = function(owner, repo, number, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1701,7 +1701,7 @@ endpoint.repos.pulls.reviews.get = function(owner, repo, number, id, httpOptions
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1738,7 +1738,7 @@ endpoint.repos.pulls.comments.get = function(owner, repo, number, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -1921,7 +1921,7 @@ endpoint.repos.branches.get = function(owner, repo, branch, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2035,7 +2035,7 @@ endpoint.repos.collaborators.get = function(owner, repo, username, httpOptions) 
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2072,7 +2072,7 @@ endpoint.repos.comments.get = function(owner, repo, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2120,7 +2120,7 @@ endpoint.repos.commits.get = function(owner, repo, sha, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2179,7 +2179,7 @@ endpoint.repos.keys.get = function(owner, repo, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2205,7 +2205,7 @@ endpoint.repos.deployments.get = function(owner, repo, deploymentId, httpOptions
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2231,7 +2231,7 @@ endpoint.repos.deployments.statuses.get = function(owner, repo, id, statusId, ht
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2257,7 +2257,7 @@ endpoint.repos.downloads.get = function(owner, repo, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2323,7 +2323,7 @@ endpoint.repos.pages.builds.get = function(owner, repo, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2360,7 +2360,7 @@ endpoint.repos.releases.get = function(owner, repo, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -2551,7 +2551,7 @@ endpoint.repos.hooks.get = function(owner, repo, id, httpOptions) {
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -3245,7 +3245,7 @@ endpoint.repos.issues.labels.delete = function(owner, repo, number, name, httpOp
                 httpOptions = arguments[i];
                 arguments[i] = undefined;
             }
-        } 
+        }
     }
     var url;
     switch(httpOptions ? arguments.length - 1 : arguments.length){
@@ -4249,17 +4249,17 @@ endpoint.get = function(url, httpOptions, callbackData, callbacks) {
 };
 
 endpoint.post = function(url, httpOptions, callbackData, callbacks) {
-    options = checkHttpOptions(url, httpOptions);
+    var options = checkHttpOptions(url, httpOptions);
     return endpoint._post(options, callbackData, callbacks);
 };
 
 endpoint.put = function(url, httpOptions, callbackData, callbacks) {
-    options = checkHttpOptions(url, httpOptions);
+    var options = checkHttpOptions(url, httpOptions);
     return endpoint._put(options, callbackData, callbacks);
 };
 
 endpoint.patch = function(url, httpOptions, callbackData, callbacks) {
-    options = checkHttpOptions(url, httpOptions);
+    var options = checkHttpOptions(url, httpOptions);
     return endpoint._patch(options, callbackData, callbacks);
 };
 
@@ -4279,7 +4279,7 @@ endpoint.options = function(url, httpOptions, callbackData, callbacks) {
 };
 
 endpoint.utils = {};
-            
+
 endpoint.utils.parseTimestamp = function(dateString) {
     if (!dateString) {
         return null;
@@ -4309,6 +4309,25 @@ endpoint.utils.formatTimestamp = function(date) {
         + 'Z';
 };
 
+endpoint.utils.fromDateToTimestamp = function(params) {
+    if (!!params) {
+        return {timestamp: new Date(params).getTime()};
+    }
+    return null;
+};
+
+endpoint.utils.fromMillisToDate = function(params) {
+    if (!!params) {
+        var sdf = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            timeZone: 'UTC'
+        });
+        return {date: sdf.format(new Date(parseInt(params)))};
+    }
+    return null;
+};
+
 ///////////////////////
 //  Private helpers  //
 ///////////////////////
@@ -4327,7 +4346,7 @@ var mergeJSON = function (json1, json2) {
 
 var concatQuery = function (url, key, value) {
     return url + ((!url || url.indexOf('?') < 0) ? '?' : '&') + key + "=" + value;
-};
+}
 
 var checkHttpOptions = function (url, options) {
     options = options || {};
@@ -4349,13 +4368,13 @@ var checkHttpOptions = function (url, options) {
         }
     }
     return options;
-};
+}
 
 var isObject = function (obj) {
     return !!obj && stringType(obj) === '[object Object]'
-};
+}
 
-var stringType = Function.prototype.call.bind(Object.prototype.toString);
+var stringType = Function.prototype.call.bind(Object.prototype.toString)
 
 var parse = function (str) {
     try {
